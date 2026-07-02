@@ -1,0 +1,62 @@
+# ============================================================
+# Docker Compose — Orquestación completa del proyecto
+# ============================================================
+# Este archivo define todos los servicios necesarios para ejecutar
+# la aplicación completa con un solo comando: docker compose up
+#
+# Servicios:
+#   - db:  Base de datos PostgreSQL
+#   - app: Aplicación Spring Boot (se construye desde el Dockerfile)
+# ============================================================
+
+services:
+
+  # ---------------------------------------------------------
+  # Servicio de Base de Datos — PostgreSQL
+  # ---------------------------------------------------------
+  db:
+    image: postgres:15-alpine        # Imagen oficial de PostgreSQL (versión Alpine, más liviana)
+    container_name: postgres-repaso
+    environment:
+      POSTGRES_DB: chefs_db          # Nombre de la base de datos que se crea automáticamente
+      POSTGRES_USER: postgresql      # Usuario de la base de datos
+      POSTGRES_PASSWORD: postgresql  # Contraseña del usuario
+    ports:
+      - "5432:5432"                  # Mapea el puerto del contenedor al host (acceso local)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistencia de datos (no se pierden al reiniciar)
+    restart: unless-stopped          # Se reinicia automáticamente si se cae
+    healthcheck:                     # Verifica que PostgreSQL esté listo antes de iniciar la app
+      test: ["CMD-SHELL", "pg_isready -U postgresql -d chefs_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------
+  # Servicio de la Aplicación — Spring Boot
+  # ---------------------------------------------------------
+  app:
+    build:
+      context: .                     # El contexto de build es la raíz del proyecto
+      dockerfile: Dockerfile         # Usa nuestro Dockerfile multi-stage
+    container_name: spring-repaso
+    ports:
+      - "8080:8080"                  # La app corre en el puerto 8080 dentro del contenedor
+    environment:
+      # Sobreescribimos las propiedades de Spring Boot mediante variables de entorno.
+      # Dentro de Docker, el host de la BD NO es "localhost" sino el nombre del servicio ("db").
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/chefs_db
+      SPRING_DATASOURCE_USERNAME: postgresql
+      SPRING_DATASOURCE_PASSWORD: postgresql
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_PORT: 8080
+    depends_on:
+      db:
+        condition: service_healthy   # Espera a que PostgreSQL pase el healthcheck
+    restart: unless-stopped
+
+# ---------------------------------------------------------
+# Volúmenes persistentes
+# ---------------------------------------------------------
+volumes:
+  postgres_data:                     # Volumen nombrado para la base de datos

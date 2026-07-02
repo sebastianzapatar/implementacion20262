@@ -1,0 +1,503 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName UP-TO-DATE
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-07-02T12:42:14.599-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : Starting RepasoApplication using Java 25 with PID 65413 (/Users/sebastianzapata/Documents/implementacion20262/repaso/build/classes/java/main started by sebastianzapata in /Users/sebastianzapata/Documents/implementacion20262/repaso)
+2026-07-02T12:42:14.600-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-07-02T12:42:14.616-05:00  INFO 65413 --- [repaso] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-07-02T12:42:14.616-05:00  INFO 65413 --- [repaso] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-07-02T12:42:14.849-05:00  INFO 65413 --- [repaso] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-02T12:42:14.865-05:00  INFO 65413 --- [repaso] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 2 JPA repository interfaces.
+2026-07-02T12:42:15.020-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8082 (http)
+2026-07-02T12:42:15.025-05:00  INFO 65413 --- [repaso] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-02T12:42:15.025-05:00  INFO 65413 --- [repaso] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-02T12:42:15.038-05:00  INFO 65413 --- [repaso] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 421 ms
+2026-07-02T12:42:15.095-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-02T12:42:15.112-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-07-02T12:42:15.239-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-02T12:42:15.249-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-02T12:42:15.303-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3bb69913
+2026-07-02T12:42:15.304-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-02T12:42:15.333-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/chefs_db]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: chefs_db/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-02T12:42:15.627-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-02T12:42:15.661-05:00  INFO 65413 --- [repaso] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-02T12:42:15.686-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-02T12:42:15.968-05:00  WARN 65413 --- [repaso] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-02T12:42:16.098-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8082 (http) with context path '/'
+2026-07-02T12:42:16.100-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : Started RepasoApplication in 1.633 seconds (process running for 1.781)
+2026-07-02T12:42:28.712-05:00  INFO 65413 --- [repaso] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-02T12:42:28.712-05:00  INFO 65413 --- [repaso] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-02T12:42:28.713-05:00  INFO 65413 --- [repaso] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-02T12:42:28.832-05:00  WARN 65413 --- [repaso] [nio-8082-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [jakarta.servlet.ServletException: Handler dispatch failed: java.lang.NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)']
+2026-07-02T12:43:32.579-05:00  INFO 65413 --- [repaso] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-07-02T12:43:32.589-05:00  INFO 65413 --- [repaso] [       Thread-1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-02T12:43:32.592-05:00  INFO 65413 --- [repaso] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-02T12:43:32.594-05:00  INFO 65413 --- [repaso] [       Thread-1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-02T12:43:32.600-05:00  INFO 65413 --- [repaso] [       Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-07-02T12:43:32.601-05:00  INFO 65413 --- [repaso] [       Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-07-02T12:43:32.667-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : Starting RepasoApplication using Java 25 with PID 65413 (/Users/sebastianzapata/Documents/implementacion20262/repaso/build/classes/java/main started by sebastianzapata in /Users/sebastianzapata/Documents/implementacion20262/repaso)
+2026-07-02T12:43:32.667-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-07-02T12:43:32.719-05:00  INFO 65413 --- [repaso] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-02T12:43:32.723-05:00  INFO 65413 --- [repaso] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 2 JPA repository interfaces.
+2026-07-02T12:43:32.752-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8082 (http)
+2026-07-02T12:43:32.752-05:00  INFO 65413 --- [repaso] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-02T12:43:32.752-05:00  INFO 65413 --- [repaso] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-02T12:43:32.757-05:00  INFO 65413 --- [repaso] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 89 ms
+2026-07-02T12:43:32.771-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-02T12:43:32.778-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-02T12:43:32.778-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-07-02T12:43:32.792-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@4d68f82e
+2026-07-02T12:43:32.793-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-07-02T12:43:32.799-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/chefs_db]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: chefs_db/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-02T12:43:32.820-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-02T12:43:32.845-05:00  INFO 65413 --- [repaso] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-02T12:43:32.876-05:00  WARN 65413 --- [repaso] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-02T12:43:32.920-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8082 (http) with context path '/'
+2026-07-02T12:43:32.921-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : Started RepasoApplication in 0.261 seconds (process running for 78.602)
+2026-07-02T12:43:32.922-05:00  INFO 65413 --- [repaso] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-07-02T12:55:40.665-05:00  INFO 65413 --- [repaso] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-02T12:55:40.670-05:00  INFO 65413 --- [repaso] [       Thread-5] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-07-02T12:55:40.671-05:00  INFO 65413 --- [repaso] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-07-02T12:55:40.673-05:00  INFO 65413 --- [repaso] [       Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-02T12:55:40.678-05:00  INFO 65413 --- [repaso] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-07-02T12:55:40.679-05:00  INFO 65413 --- [repaso] [       Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-07-02T12:55:40.755-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : Starting RepasoApplication using Java 25 with PID 65413 (/Users/sebastianzapata/Documents/implementacion20262/repaso/build/classes/java/main started by sebastianzapata in /Users/sebastianzapata/Documents/implementacion20262/repaso)
+2026-07-02T12:55:40.755-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-07-02T12:55:40.808-05:00  INFO 65413 --- [repaso] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-02T12:55:40.811-05:00  INFO 65413 --- [repaso] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 2 JPA repository interfaces.
+2026-07-02T12:55:40.837-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8082 (http)
+2026-07-02T12:55:40.837-05:00  INFO 65413 --- [repaso] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-02T12:55:40.837-05:00  INFO 65413 --- [repaso] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-07-02T12:55:40.841-05:00  INFO 65413 --- [repaso] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 85 ms
+2026-07-02T12:55:40.854-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-02T12:55:40.862-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-02T12:55:40.862-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-07-02T12:55:40.876-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@5966d6ba
+2026-07-02T12:55:40.876-05:00  INFO 65413 --- [repaso] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-07-02T12:55:40.881-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/chefs_db]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.17
+	Default catalog/schema: chefs_db/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-02T12:55:40.903-05:00  INFO 65413 --- [repaso] [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-02T12:55:40.925-05:00  INFO 65413 --- [repaso] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-02T12:55:40.954-05:00  WARN 65413 --- [repaso] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-02T12:55:41.003-05:00  INFO 65413 --- [repaso] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8082 (http) with context path '/'
+2026-07-02T12:55:41.004-05:00  INFO 65413 --- [repaso] [  restartedMain] c.nomelestar.repaso.RepasoApplication    : Started RepasoApplication in 0.258 seconds (process running for 806.687)
+2026-07-02T12:55:41.004-05:00  INFO 65413 --- [repaso] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-07-02T14:00:40.190-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@26f14293 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:00:46.461-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@7f003ca0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:00:47.483-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@3c43fe29 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:02.414-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@22ff38f1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:03.602-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@1ab3b414 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:14.246-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@3922a3dd (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:19.735-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@197708a7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:19.866-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@32f378d3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:39.903-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@59bc26c9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:01:58.707-05:00  WARN 65413 --- [repaso] [l-3:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@7eaef3a1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-07-02T14:02:00.412-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (0a3073e7-2ad3-43d3-b944-0551871d93d7)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:03:05.490-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (b8fc7e4b-5023-439d-aa87-7b5f6e78d0ea)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:04:10.582-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (7914896f-d93a-4ed0-82a1-0f23345c2499)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:05:15.668-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (88e70c42-3d5d-4b29-9ec4-8fe92864fbef)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+
+Daemon will be stopped at the end of the build stop command received
+
+> Task :bootRun
+2026-07-02T14:06:20.731-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (cef782ba-576e-4cd9-ba91-52eb5a204f97)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:07:25.793-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (f692f75d-c039-4aa1-bb84-98ff9f46a080)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:08:35.764-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (deed264a-642c-485f-afa4-bab0b283e0e6)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:09:40.841-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (bd7ad410-4791-40d7-8852-845a9b6ea237)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:10:45.916-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (e05e924e-0abd-4388-8eb7-5b92f9fc4788)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:11:50.994-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (cc662601-9570-4a2b-ab35-4477e3c55d19)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+
+2026-07-02T14:12:56.058-05:00  WARN 65413 --- [repaso] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Pool is empty, failed to create/setup connection (5abc917a-dbed-4d2d-a544-c60528df7605)
+
+org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:425) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.11.jar:42.7.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:271) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:132) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:219) ~[postgresql-42.7.11.jar:42.7.11]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:365) ~[postgresql-42.7.11.jar:42.7.11]
+	... 14 common frames omitted
+

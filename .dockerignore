@@ -1,0 +1,35 @@
+# Archivos y carpetas que Docker debe IGNORAR al construir la imagen.
+# Esto reduce el tamaño del contexto de build y evita copiar archivos innecesarios.
+
+# Carpetas de build generadas por Gradle/IntelliJ
+build/
+.gradle/
+bin/
+out/
+
+# Archivos de configuración del IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Docker (evitar recursión)
+Dockerfile
+compose.yml
+.dockerignore
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.swp

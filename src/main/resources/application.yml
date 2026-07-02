@@ -1,0 +1,24 @@
+
+spring:
+  application:
+    name: repaso
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chefs_db
+    username: postgresql
+    password: postgresql
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
