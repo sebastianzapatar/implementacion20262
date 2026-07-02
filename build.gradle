@@ -49,3 +49,18 @@ tasks.withType(JavaCompile).configureEach {
         options.release.set(21)
     }
 }
+
+// Custom task to run Gatling bypassing the broken gatlingRun plugin task in Gradle 9
+tasks.register("runGatling", JavaExec) {
+    dependsOn 'gatlingClasses'
+    mainClass = 'io.gatling.app.Gatling'
+    classpath = sourceSets.gatling.runtimeClasspath
+    args = [
+        '-s', 'com.nomelestar.repaso.AppStressSimulation',
+        '-rf', layout.buildDirectory.dir("reports/gatling").get().asFile.absolutePath
+    ]
+    jvmArgs = [
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.util=ALL-UNNAMED'
+    ]
+}
