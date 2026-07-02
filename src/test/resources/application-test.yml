@@ -1,0 +1,39 @@
+# ============================================================
+# Perfil de Testing — Base de datos H2 en memoria
+# ============================================================
+# Este perfil reemplaza PostgreSQL por H2 para que los tests
+# de integración y E2E no dependan de infraestructura externa.
+# Se activa con: @ActiveProfiles("test")
+# ============================================================
+
+spring:
+  application:
+    name: repaso
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop   # Crea tablas al iniciar, las borra al terminar cada test
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: false           # No necesitamos la consola web de H2 en tests
+
+server:
+  port: 0                      # Puerto aleatorio para evitar conflictos en E2E
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

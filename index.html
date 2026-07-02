@@ -554,6 +554,59 @@ void calculaDescuentoParaClientePremium() {
    
       </section>
 
+      <section>
+        <div class="kicker">Práctica</div>
+        <h2>Ejecutar las Pruebas</h2>
+        <p>¿Cómo correr el plan de pruebas en nuestro proyecto de Spring Boot?</p>
+        
+        <div class="grid-2" style="margin-top: 24px;">
+          <div class="card" style="text-align: left;">
+            <h3 style="margin-bottom: 15px;">Pruebas Funcionales</h3>
+            <p><strong>(Unitarias, Integración y E2E)</strong></p>
+            <div class="code" style="max-height: 120px;">$ ./gradlew test</div>
+            <p style="margin-top: 10px;">Ejecuta de forma automática los tests con H2 en memoria y Tomcat en un puerto aleatorio.</p>
+            <p style="margin-top: 10px; color: var(--success); font-weight: bold;">Ver reporte: <br>📁 build/reports/tests/test/index.html</p>
+          </div>
+          
+          <div class="card" style="text-align: left;">
+            <h3 style="margin-bottom: 15px;">Pruebas de Estrés</h3>
+            <p><strong>(Gatling)</strong></p>
+            <div class="code" style="max-height: 120px;">$ ./gradlew gatlingRun</div>
+            <p style="margin-top: 10px;">Inyecta carga HTTP real. ¡Asegúrate de que la aplicación y BD estén corriendo antes de ejecutarlo!</p>
+            <p style="margin-top: 10px; color: var(--success); font-weight: bold;">Ver reporte: <br>📁 build/reports/gatling/index.html</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="kicker">Stack & Herramientas</div>
+        <h2>Librerías Necesarias y Alternativa Maven</h2>
+        
+        <div class="grid-2" style="margin-top: 24px;">
+          <div class="card" style="text-align: left;">
+            <h3 style="margin-bottom: 15px;">Librerías (Dependencias)</h3>
+            <ul style="font-size: 0.65em; line-height: 1.5; color: var(--muted);">
+              <li><strong>spring-boot-starter-test</strong>: Incluye JUnit 5, Mockito, Spring TestContext, JSON assert.</li>
+              <li><strong>H2 Database</strong> (test runtime): Base de datos en memoria para pruebas E2E e Integración.</li>
+              <li><strong>Gatling</strong> (io.gatling:gatling-app): Framework y DSL para pruebas de estrés.</li>
+            </ul>
+          </div>
+          
+          <div class="card" style="text-align: left;">
+            <h3 style="margin-bottom: 15px;">Ejecución con Maven</h3>
+            <p>Si el proyecto usa Maven en lugar de Gradle, los comandos equivalentes son:</p>
+            <div class="code" style="max-height: 120px; font-size: 0.55em; margin-top: 10px;">
+# Pruebas Funcionales
+$ mvn test
+
+# Pruebas de Estrés
+$ mvn gatling:test
+            </div>
+            <p style="margin-top: 10px; color: var(--success); font-weight: bold;">Reportes Maven: <br>📁 target/surefire-reports/<br>📁 target/gatling/</p>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 

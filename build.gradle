@@ -2,15 +2,18 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.1.0'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'io.gatling.gradle' version '3.13.4'
 }
 
 group = 'com.nomelestar'
 version = '0.0.1-SNAPSHOT'
 description = 'repaso'
 
+ext.reportsDir = file("build/reports")
+
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -20,7 +23,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'
     compileOnly 'org.projectlombok:lombok'
@@ -29,11 +32,20 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testImplementation 'org.springframework.boot:spring-boot-resttestclient'
     testCompileOnly 'org.projectlombok:lombok'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testRuntimeOnly 'com.h2database:h2'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    gatling 'io.gatling.highcharts:gatling-charts-highcharts:3.13.4'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (name.toLowerCase().contains("gatling")) {
+        options.release.set(21)
+    }
 }
