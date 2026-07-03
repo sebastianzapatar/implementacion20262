@@ -326,6 +326,37 @@
       </section>
 
       <section>
+        <div class="kicker">Ecosistema</div>
+        <h2>Librerías del Proyecto</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Spring Web</h3>
+            <p>Servidor embebido (Tomcat) y soporte para construir APIs REST (Controllers, JSON).</p>
+          </div>
+          <div class="card">
+            <h3>Spring Data JPA</h3>
+            <p>Abstracción sobre Hibernate para acceso a base de datos relacional sin escribir SQL.</p>
+          </div>
+          <div class="card">
+            <h3>PostgreSQL & H2</h3>
+            <p>PostgreSQL para persistencia en desarrollo/producción, H2 para base de datos en memoria en pruebas.</p>
+          </div>
+          <div class="card">
+            <h3>Spring Validation</h3>
+            <p>Implementación de Jakarta Validation para asegurar que los DTOs no vengan con datos inválidos.</p>
+          </div>
+          <div class="card">
+            <h3>Lombok</h3>
+            <p>Genera constructores, getters y setters automáticamente, reduciendo el código repetitivo.</p>
+          </div>
+          <div class="card">
+            <h3>Springdoc OpenAPI</h3>
+            <p>Genera automáticamente la documentación visual de la API (Swagger UI) leyendo los controladores.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <div class="kicker">Arquitectura</div>
         <h2>Arquitectura por capas</h2>
         <p>La meta no es solo “que funcione”; la meta es que sea mantenible, testeable y fácil de extender.</p>
@@ -567,6 +598,53 @@ public record ChefResponse(
   String specialty,
   String email
 ) {}</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="kicker">Jakarta Validation</div>
+        <h2>Anotaciones de validación</h2>
+        <div class="two-col">
+          <div>
+            <table class="tool-table">
+              <tr>
+                <th>Anotación</th>
+                <th>Uso y propósito</th>
+              </tr>
+              <tr>
+                <td><span class="anno">@Valid</span></td>
+                <td>Activa la validación en el Controller antes de ejecutar la lógica.</td>
+              </tr>
+              <tr>
+                <td><span class="anno">@NotNull</span></td>
+                <td>El valor no puede ser nulo. Útil para UUIDs, fechas o números.</td>
+              </tr>
+              <tr>
+                <td><span class="anno">@NotBlank</span></td>
+                <td>El texto no puede ser nulo, ni vacío, ni contener solo espacios.</td>
+              </tr>
+              <tr>
+                <td><span class="anno">@Size</span></td>
+                <td>Define un tamaño mínimo y/o máximo para textos o listas.</td>
+              </tr>
+              <tr>
+                <td><span class="anno">@Email</span></td>
+                <td>Valida que el texto tenga formato correcto de correo electrónico.</td>
+              </tr>
+              <tr>
+                <td><span class="anno">@DecimalMin</span></td>
+                <td>Asegura que un valor numérico (ej. precio) cumpla con un mínimo.</td>
+              </tr>
+            </table>
+          </div>
+          <div class="code">
+<span class="green">@PostMapping</span>
+public ResponseEntity&lt;ClientResponse&gt; create(
+  <span class="green">@Valid @RequestBody</span> ClientRequest request
+) {
+  return ResponseEntity.status(HttpStatus.CREATED)
+                       .body(service.crearCliente(request));
+}</div>
         </div>
       </section>
 
