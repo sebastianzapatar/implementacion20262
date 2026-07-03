@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spring Boot — Guía Completa</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+
+  <style>
+    :root {
+      --blue-950: #03152f;
+      --blue-900: #061d49;
+      --blue-800: #082b6f;
+      --blue-700: #0b3d91;
+      --cyan: #38e8ff;
+      --sky: #80bfff;
+      --white: #ffffff;
+      --muted: rgba(255,255,255,.82);
+      --glass: rgba(255,255,255,.09);
+      --line: rgba(255,255,255,.22);
+      --success: #76f7c8;
+      --warning: #ffd166;
+      --spring-green: #6db33f;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 15%, #1546a0 0%, var(--blue-900) 34%, var(--blue-950) 100%);
+    }
+
+    .reveal {
+      color: var(--white);
+      font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .reveal .slides section {
+      background:
+        linear-gradient(135deg, rgba(8,43,111,.96), rgba(3,21,47,.96)),
+        radial-gradient(circle at 85% 20%, rgba(56,232,255,.18), transparent 26%);
+      border-radius: 28px;
+      box-shadow: 0 30px 90px rgba(0,0,0,.32);
+      padding: 20px 30px;
+      box-sizing: border-box;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      color: var(--white);
+      letter-spacing: -0.03em;
+      text-transform: none;
+      text-shadow: none;
+      font-weight: 800;
+      line-height: 1.02;
+    }
+
+    .reveal h1 { font-size: 2.2em; margin-bottom: .18em; }
+    .reveal h2 { font-size: 1.5em; margin-bottom: .48em; }
+    .reveal h3 { font-size: .95em; color: var(--cyan); margin-bottom: .35em; }
+    .reveal p, .reveal li { color: var(--muted); font-size: .58em; line-height: 1.35; }
+    .reveal small { color: rgba(255,255,255,.72); }
+    .reveal strong { color: var(--white); font-weight: 800; }
+    .reveal a { color: var(--cyan); }
+    .reveal ul { margin-left: 1.05em; }
+    .reveal li { margin-bottom: .42em; }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--cyan);
+      font-size: .46em;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.06);
+      margin-bottom: 22px;
+    }
+
+    .accent { color: var(--cyan); }
+    .spring { color: var(--spring-green); }
+    .muted { color: var(--muted); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: start;
+    }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--glass);
+      border-radius: 24px;
+      padding: 22px 24px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+    }
+    .card h3 { margin-top: 0; }
+    .card p, .card li { font-size: .55em; }
+
+    .code {
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: left;
+      overflow-y: auto;
+      max-height: 300px;
+      color: #e8f6ff;
+      font-size: .43em;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    .tag { display: inline-block; border: 1px solid var(--line); padding: 5px 10px; border-radius: 999px; margin: 4px; font-size: .38em; color: var(--white); background: rgba(255,255,255,.08); }
+    .tag.spring-tag { border-color: rgba(109,179,63,.5); background: rgba(109,179,63,.15); color: var(--spring-green); }
+
+    .anno {
+      display: inline-block;
+      background: rgba(109,179,63,.18);
+      border: 1px solid rgba(109,179,63,.4);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: .48em;
+      color: var(--spring-green);
+      font-weight: 700;
+      margin: 3px;
+    }
+
+    .tool-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .43em; }
+    .tool-table th, .tool-table td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; color: var(--muted); }
+    .tool-table th { color: var(--white); font-weight: 800; }
+
+    .source-list li { font-size: .48em; }
+
+    @media (max-width: 900px) {
+      .reveal .slides section { padding: 36px; }
+      .two-col, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: PORTADA -->
+      <section>
+        <div class="kicker">Framework Java</div>
+        <h1>Spring Boot</h1>
+        <h3>Fundamentos, anotaciones y arquitectura</h3>
+        <p style="margin-top: 20px;">Stack: <span class="spring">Spring Boot</span> + JPA + PostgreSQL + Lombok + Swagger</p>
+        <div style="margin-top: 24px;">
+          <span class="tag spring-tag">Java 21+</span>
+          <span class="tag spring-tag">Spring Boot 4.x</span>
+          <span class="tag spring-tag">Gradle / Maven</span>
+          <span class="tag spring-tag">JPA / Hibernate</span>
+          <span class="tag spring-tag">REST API</span>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ¿QUÉ ES SPRING BOOT? -->
+      <section>
+        <div class="kicker">Introducción</div>
+        <h2>¿Qué es Spring Boot?</h2>
+        <div class="two-col">
+          <div>
+            <p><strong>Spring Boot</strong> es un framework de Java que simplifica la creación de aplicaciones basadas en Spring Framework. Elimina la necesidad de configuraciones XML extensas y permite crear aplicaciones listas para producción con mínimo esfuerzo.</p>
+            <ul>
+              <li><strong>Auto-configuración:</strong> Detecta dependencias en el classpath y configura automáticamente los beans necesarios.</li>
+              <li><strong>Servidor embebido:</strong> Incluye Tomcat, Jetty o Undertow. No necesitas un servidor externo.</li>
+              <li><strong>Convención sobre configuración:</strong> Valores por defecto inteligentes que puedes sobreescribir.</li>
+              <li><strong>Spring Initializr:</strong> Herramienta web para generar proyectos con las dependencias que necesites.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Spring Framework vs Spring Boot</h3>
+            <table class="tool-table">
+              <tr><th>Aspecto</th><th>Spring</th><th>Spring Boot</th></tr>
+              <tr><td>Configuración</td><td>Manual (XML/Java)</td><td>Automática</td></tr>
+              <tr><td>Servidor</td><td>Externo (WAR)</td><td>Embebido (JAR)</td></tr>
+              <tr><td>Inicio</td><td>Complejo</td><td>Un comando</td></tr>
+              <tr><td>Dependencias</td><td>Manual</td><td>Starters</td></tr>
+              <tr><td>Producción</td><td>Más pasos</td><td>Listo al instante</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: VENTAJAS -->
+      <section>
+        <div class="kicker">¿Por qué Spring Boot?</div>
+        <h2>Ventajas frente a otros Frameworks</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>🚀 Productividad</h3>
+            <p>Auto-configuración, starters y DevTools permiten desarrollar y probar rápidamente sin configurar todo desde cero.</p>
+          </div>
+          <div class="card">
+            <h3>🌍 Ecosistema Enorme</h3>
+            <p>Spring Data, Spring Security, Spring Cloud, Spring Batch, Spring MVC... soluciones para casi cualquier necesidad.</p>
+          </div>
+          <div class="card">
+            <h3>🏢 Estándar Empresarial</h3>
+            <p>Es el framework Java más usado en la industria. Las empresas más grandes del mundo lo utilizan en producción.</p>
+          </div>
+          <div class="card">
+            <h3>📦 Microservicios</h3>
+            <p>Diseñado para microservicios. Cada app se empaqueta como JAR ejecutable independiente con su propio servidor.</p>
+          </div>
+          <div class="card">
+            <h3>🧪 Testing Integrado</h3>
+            <p>Soporte nativo para JUnit 5, Mockito, MockMvc, TestRestTemplate y perfiles de test con H2 en memoria.</p>
+          </div>
+          <div class="card">
+            <h3>🐳 Cloud Native</h3>
+            <p>Compatible con Docker, Kubernetes, AWS, GCP, Azure. Soporte nativo para buildpacks y contenedores.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ARQUITECTURA POR CAPAS -->
+      <section>
+        <div class="kicker">Arquitectura</div>
+        <h2>Arquitectura por Capas en Spring Boot</h2>
+        <div class="two-col">
+          <div>
+            <p>Spring Boot promueve una arquitectura limpia separada en capas con responsabilidades bien definidas:</p>
+            <ul>
+              <li><strong>Controller (Presentación):</strong> Recibe peticiones HTTP y devuelve respuestas. No contiene lógica de negocio.</li>
+              <li><strong>Service (Lógica de Negocio):</strong> Contiene las reglas de negocio, validaciones y orquestación.</li>
+              <li><strong>Repository (Acceso a Datos):</strong> Interactúa con la base de datos usando JPA/Hibernate.</li>
+              <li><strong>Entity (Modelo):</strong> Representa las tablas de la base de datos.</li>
+              <li><strong>DTO (Data Transfer Object):</strong> Objetos para transferir datos entre capas sin exponer entidades.</li>
+              <li><strong>Mapper:</strong> Convierte entre Entidades y DTOs.</li>
+            </ul>
+          </div>
+          <div class="code" style="font-size: .5em; text-align: center;">
+📱 Cliente HTTP (Postman / Frontend)
+         ↕ JSON
+┌─────────────────────────────┐
+│      @RestController        │ ← Controller
+│     (Endpoints HTTP)        │
+└─────────────────────────────┘
+              ↕ DTOs
+┌─────────────────────────────┐
+│         @Service            │ ← Service
+│   (Lógica de Negocio)       │
+└─────────────────────────────┘
+              ↕ Entities
+┌─────────────────────────────┐
+│       @Repository           │ ← Repository
+│     (Acceso a BD)           │
+└─────────────────────────────┘
+              ↕ SQL
+┌─────────────────────────────┐
+│      🗄️ PostgreSQL / H2     │ ← Base de Datos
+└─────────────────────────────┘</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ANOTACIONES FUNDAMENTALES -->
+      <section>
+        <div class="kicker">Anotaciones Core</div>
+        <h2>Anotaciones Fundamentales de Spring</h2>
+        <p>Las anotaciones (@) son la forma en que Spring Boot entiende qué rol cumple cada clase.</p>
+        <table class="tool-table" style="margin-top: 16px;">
+          <tr><th>Anotación</th><th>Qué hace</th><th>Dónde se usa</th></tr>
+          <tr><td><span class="anno">@SpringBootApplication</span></td><td>Punto de entrada de la app. Combina @Configuration + @EnableAutoConfiguration + @ComponentScan</td><td>Clase principal</td></tr>
+          <tr><td><span class="anno">@Component</span></td><td>Marca una clase como un Bean gestionado por Spring (se inyecta automáticamente)</td><td>Cualquier clase</td></tr>
+          <tr><td><span class="anno">@Service</span></td><td>Variante de @Component. Indica que la clase contiene lógica de negocio</td><td>Capa Service</td></tr>
+          <tr><td><span class="anno">@Repository</span></td><td>Variante de @Component. Indica acceso a datos y traduce excepciones SQL</td><td>Capa Repository</td></tr>
+          <tr><td><span class="anno">@Configuration</span></td><td>Define una clase de configuración que declara Beans con @Bean</td><td>Clases de config</td></tr>
+          <tr><td><span class="anno">@Autowired</span></td><td>Inyecta automáticamente dependencias (preferible usar constructor)</td><td>Campos/Constructores</td></tr>
+        </table>
+      </section>
+
+      <!-- SLIDE 6: ANOTACIONES WEB / REST -->
+      <section>
+        <div class="kicker">Anotaciones Web</div>
+        <h2>Anotaciones para REST APIs</h2>
+        <div class="two-col">
+          <div>
+            <table class="tool-table">
+              <tr><th>Anotación</th><th>Qué hace</th></tr>
+              <tr><td><span class="anno">@RestController</span></td><td>Combina @Controller + @ResponseBody. Cada método retorna JSON directamente.</td></tr>
+              <tr><td><span class="anno">@RequestMapping</span></td><td>Define la ruta base del controlador (ej: "/api/chefs").</td></tr>
+              <tr><td><span class="anno">@GetMapping</span></td><td>Mapea peticiones HTTP GET a un método.</td></tr>
+              <tr><td><span class="anno">@PostMapping</span></td><td>Mapea peticiones HTTP POST a un método.</td></tr>
+              <tr><td><span class="anno">@PutMapping</span></td><td>Mapea peticiones HTTP PUT a un método.</td></tr>
+              <tr><td><span class="anno">@DeleteMapping</span></td><td>Mapea peticiones HTTP DELETE a un método.</td></tr>
+              <tr><td><span class="anno">@PathVariable</span></td><td>Extrae valores de la URL (ej: /chefs/{id}).</td></tr>
+              <tr><td><span class="anno">@RequestBody</span></td><td>Convierte el cuerpo JSON de la petición a un objeto Java.</td></tr>
+            </table>
+          </div>
+          <div class="code" style="font-size: .48em;">
+<span style="color: var(--spring-green);">@RestController</span>
+<span style="color: var(--spring-green);">@RequestMapping</span>("/api/chefs")
+public class ChefController {
+
+    private final ChefService chefService;
+
+    <span style="color: var(--spring-green);">@PostMapping</span>
+    public ResponseEntity&lt;ChefResponse&gt;
+      crearChef(<span style="color: var(--spring-green);">@RequestBody</span> ChefRequest req) {
+        return ResponseEntity
+          .status(HttpStatus.CREATED)
+          .body(chefService.crearChef(req));
+    }
+
+    <span style="color: var(--spring-green);">@GetMapping</span>("/{id}")
+    public ResponseEntity&lt;ChefResponse&gt;
+      obtenerPorId(<span style="color: var(--spring-green);">@PathVariable</span> UUID id) {
+        return ResponseEntity
+          .ok(chefService.obtenerPorId(id));
+    }
+}</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: ANOTACIONES JPA -->
+      <section>
+        <div class="kicker">Anotaciones JPA</div>
+        <h2>Anotaciones de Persistencia (JPA / Hibernate)</h2>
+        <div class="two-col">
+          <div>
+            <table class="tool-table">
+              <tr><th>Anotación</th><th>Qué hace</th></tr>
+              <tr><td><span class="anno">@Entity</span></td><td>Marca la clase como tabla en la base de datos.</td></tr>
+              <tr><td><span class="anno">@Table</span></td><td>Define el nombre de la tabla (ej: @Table(name = "chefs")).</td></tr>
+              <tr><td><span class="anno">@Id</span></td><td>Define el campo como clave primaria.</td></tr>
+              <tr><td><span class="anno">@GeneratedValue</span></td><td>Genera el valor automáticamente (AUTO, UUID, IDENTITY, SEQUENCE).</td></tr>
+              <tr><td><span class="anno">@Column</span></td><td>Personaliza la columna (nombre, nullable, unique, length).</td></tr>
+              <tr><td><span class="anno">@OneToMany</span></td><td>Un registro tiene muchos hijos (Chef → Platos).</td></tr>
+              <tr><td><span class="anno">@ManyToOne</span></td><td>Muchos registros pertenecen a uno (Plato → Chef).</td></tr>
+              <tr><td><span class="anno">@ManyToMany</span></td><td>Relación N:M con tabla intermedia (Cliente ↔ Plato).</td></tr>
+              <tr><td><span class="anno">@JoinColumn</span></td><td>Columna FK en relaciones @ManyToOne.</td></tr>
+              <tr><td><span class="anno">@JoinTable</span></td><td>Tabla intermedia en relaciones @ManyToMany.</td></tr>
+            </table>
+          </div>
+          <div class="code" style="font-size: .48em;">
+<span style="color: var(--spring-green);">@Entity</span>
+<span style="color: var(--spring-green);">@Table</span>(name = "dishes")
+public class Dish {
+
+    <span style="color: var(--spring-green);">@Id</span>
+    <span style="color: var(--spring-green);">@GeneratedValue</span>(strategy = UUID)
+    private UUID id;
+
+    private String nombre;
+    private BigDecimal precio;
+
+    <span style="color: var(--spring-green);">@ManyToOne</span>(fetch = LAZY)
+    <span style="color: var(--spring-green);">@JoinColumn</span>(name = "chef_id")
+    private Chef chef;
+
+    <span style="color: var(--spring-green);">@ManyToMany</span>(mappedBy = "platosConsumidos")
+    private List&lt;Client&gt; clientes;
+}</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: RELACIONES JPA -->
+      <section>
+        <div class="kicker">Relaciones JPA</div>
+        <h2>Tipos de Relaciones en JPA</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>@OneToMany / @ManyToOne</h3>
+            <p><strong>Ejemplo:</strong> Un Chef tiene muchos Platos. Un Plato pertenece a un Chef.</p>
+            <div class="code" style="font-size: .5em;">
+Chef (1) ──→ (N) Dish
+
+Tabla: dishes
+  chef_id FK → chefs.id</div>
+          </div>
+          <div class="card">
+            <h3>@ManyToMany</h3>
+            <p><strong>Ejemplo:</strong> Un Cliente consume muchos Platos. Un Plato es consumido por muchos Clientes.</p>
+            <div class="code" style="font-size: .5em;">
+Client (N) ←→ (N) Dish
+
+Tabla intermedia: dish_clients
+  client_id FK → clients.id
+  dish_id   FK → dishes.id</div>
+          </div>
+          <div class="card">
+            <h3>@OneToOne</h3>
+            <p><strong>Ejemplo:</strong> Un Usuario tiene un único Perfil. Se usa @JoinColumn en el lado dueño.</p>
+            <div class="code" style="font-size: .5em;">
+User (1) ←→ (1) Profile
+
+Tabla: profiles
+  user_id FK → users.id</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: ANOTACIONES LOMBOK -->
+      <section>
+        <div class="kicker">Lombok</div>
+        <h2>Anotaciones de Lombok</h2>
+        <p>Lombok genera código repetitivo (boilerplate) en tiempo de compilación, reduciendo líneas drásticamente.</p>
+        <div class="two-col" style="margin-top: 18px;">
+          <div>
+            <table class="tool-table">
+              <tr><th>Anotación</th><th>Qué genera</th></tr>
+              <tr><td><span class="anno">@Getter</span></td><td>Todos los métodos get (ej: getNombre())</td></tr>
+              <tr><td><span class="anno">@Setter</span></td><td>Todos los métodos set (ej: setNombre())</td></tr>
+              <tr><td><span class="anno">@NoArgsConstructor</span></td><td>Constructor vacío (requerido por JPA)</td></tr>
+              <tr><td><span class="anno">@AllArgsConstructor</span></td><td>Constructor con todos los campos</td></tr>
+              <tr><td><span class="anno">@Builder</span></td><td>Patrón Builder para crear objetos de forma fluida</td></tr>
+              <tr><td><span class="anno">@RequiredArgsConstructor</span></td><td>Constructor solo con campos final (inyección de dependencias)</td></tr>
+              <tr><td><span class="anno">@Data</span></td><td>Combina @Getter + @Setter + @ToString + @EqualsAndHashCode</td></tr>
+            </table>
+          </div>
+          <div class="code" style="font-size: .48em;">
+<span style="color: #999;">// SIN Lombok: ~60 líneas</span>
+public class Chef {
+    private UUID id;
+    private String nombre;
+    public UUID getId() { return id; }
+    public void setId(UUID id) { ... }
+    public String getNombre() { ... }
+    public void setNombre(String n) { ... }
+    public Chef() {}
+    public Chef(UUID id, String n) { ... }
+    // toString, equals, hashCode...
+}
+
+<span style="color: #999;">// CON Lombok: ~8 líneas</span>
+<span style="color: var(--spring-green);">@Getter @Setter</span>
+<span style="color: var(--spring-green);">@NoArgsConstructor @AllArgsConstructor</span>
+<span style="color: var(--spring-green);">@Builder</span>
+public class Chef {
+    private UUID id;
+    private String nombre;
+}</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: ANOTACIONES TESTING -->
+      <section>
+        <div class="kicker">Testing</div>
+        <h2>Anotaciones de Testing</h2>
+        <div class="two-col">
+          <div>
+            <table class="tool-table">
+              <tr><th>Anotación</th><th>Qué hace</th></tr>
+              <tr><td><span class="anno">@SpringBootTest</span></td><td>Levanta el contexto completo de Spring para pruebas de integración y E2E.</td></tr>
+              <tr><td><span class="anno">@WebMvcTest</span></td><td>Solo carga la capa web (Controller). Ideal para pruebas unitarias de endpoints.</td></tr>
+              <tr><td><span class="anno">@MockitoBean</span></td><td>Crea un mock de un Bean de Spring e inyecta en el contexto de test.</td></tr>
+              <tr><td><span class="anno">@ActiveProfiles</span></td><td>Activa un perfil (ej: "test") para usar H2 en vez de PostgreSQL.</td></tr>
+              <tr><td><span class="anno">@AutoConfigureMockMvc</span></td><td>Configura MockMvc para hacer peticiones HTTP sin servidor real.</td></tr>
+              <tr><td><span class="anno">@Test</span></td><td>Marca un método como caso de prueba (JUnit 5).</td></tr>
+              <tr><td><span class="anno">@DisplayName</span></td><td>Nombre descriptivo para el test en los reportes.</td></tr>
+              <tr><td><span class="anno">@BeforeEach</span></td><td>Se ejecuta antes de cada test (para limpiar datos).</td></tr>
+            </table>
+          </div>
+          <div class="code" style="font-size: .48em;">
+<span style="color: var(--spring-green);">@SpringBootTest</span>
+<span style="color: var(--spring-green);">@AutoConfigureMockMvc</span>
+<span style="color: var(--spring-green);">@ActiveProfiles</span>("test")
+class ChefIntegrationTest {
+
+    <span style="color: var(--spring-green);">@Autowired</span>
+    private MockMvc mockMvc;
+
+    <span style="color: var(--spring-green);">@BeforeEach</span>
+    void setUp() {
+        repository.deleteAll();
+    }
+
+    <span style="color: var(--spring-green);">@Test</span>
+    <span style="color: var(--spring-green);">@DisplayName</span>("POST /api/chefs → 201")
+    void crearChef() throws Exception {
+        mockMvc.perform(post("/api/chefs")
+            .contentType(APPLICATION_JSON)
+            .content("{\"nombre\":\"Chef\"}"))
+            .andExpect(status().isCreated());
+    }
+}</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: SPRING DATA JPA Y @QUERY -->
+      <section>
+        <div class="kicker">Spring Data JPA</div>
+        <h2>Repositorios y Consultas Personalizadas</h2>
+        <div class="two-col">
+          <div>
+            <p>Spring Data JPA genera automáticamente consultas SQL por el nombre del método o mediante JPQL.</p>
+            <ul>
+              <li><strong>Query Methods:</strong> Spring interpreta el nombre del método y genera SQL automáticamente.</li>
+              <li><strong>@Query (JPQL):</strong> Consultas en lenguaje JPQL usando nombres de entidades Java.</li>
+              <li><strong>@Query (nativeQuery):</strong> SQL nativo directamente contra la base de datos.</li>
+            </ul>
+            <p style="margin-top: 12px;"><strong>Ejemplo de Query Methods generados automáticamente:</strong></p>
+            <div class="code" style="font-size: .5em; max-height: 100px;">
+findByNombre(String nombre)
+  → SELECT * FROM chefs WHERE nombre = ?
+
+findByEmailContaining(String email)
+  → SELECT * FROM clients WHERE email LIKE '%?%'</div>
+          </div>
+          <div class="code" style="font-size: .48em;">
+public interface ClientRepository
+    extends JpaRepository&lt;Client, UUID&gt; {
+
+    <span style="color: #999;">// 1. Query Method (automático)</span>
+    Optional&lt;Client&gt; findByEmail(String email);
+
+    <span style="color: #999;">// 2. JPQL con JOIN</span>
+    <span style="color: var(--spring-green);">@Query</span>("""
+        SELECT d.chef FROM Client c
+        JOIN c.platosConsumidos d
+        GROUP BY d.chef
+        ORDER BY COUNT(d) DESC
+        LIMIT 1
+    """)
+    Optional&lt;Chef&gt; findChefConMasVentas();
+
+    <span style="color: #999;">// 3. JPQL con parámetros</span>
+    <span style="color: var(--spring-green);">@Query</span>("""
+        SELECT d FROM Client c
+        JOIN c.platosConsumidos d
+        WHERE c.id = :clientId
+          AND d.chef.id = :chefId
+    """)
+    List&lt;Dish&gt; findPlatosDeClientePorChef(
+        <span style="color: var(--spring-green);">@Param</span>("clientId") UUID clientId,
+        <span style="color: var(--spring-green);">@Param</span>("chefId") UUID chefId);
+}</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: INYECCIÓN DE DEPENDENCIAS -->
+      <section>
+        <div class="kicker">Concepto Clave</div>
+        <h2>Inyección de Dependencias (IoC)</h2>
+        <div class="two-col">
+          <div>
+            <p><strong>Inversión de Control (IoC)</strong> es el principio fundamental de Spring. En lugar de que tú crees los objetos con <code>new</code>, Spring los crea y los inyecta automáticamente.</p>
+            <ul>
+              <li><strong>¿Qué es un Bean?</strong> Un objeto gestionado por Spring (marcado con @Component, @Service, @Repository, etc.).</li>
+              <li><strong>¿Cómo se inyecta?</strong> Por constructor (recomendado), por campo (@Autowired) o por setter.</li>
+              <li><strong>¿Por qué por constructor?</strong> Inmutabilidad, testabilidad y claridad de dependencias.</li>
+            </ul>
+          </div>
+          <div class="code" style="font-size: .48em;">
+<span style="color: #999;">// ❌ SIN Inyección de Dependencias</span>
+public class ChefController {
+    private ChefService service =
+        new ChefService(new ChefRepository());
+    <span style="color: #999;">// Acoplamiento fuerte, difícil de testear</span>
+}
+
+<span style="color: #999;">// ✅ CON Inyección de Dependencias</span>
+<span style="color: var(--spring-green);">@RestController</span>
+<span style="color: var(--spring-green);">@RequiredArgsConstructor</span>
+public class ChefController {
+    <span style="color: #999;">// Spring inyecta el service automáticamente</span>
+    private final ChefService chefService;
+
+    <span style="color: #999;">// Fácil de testear con mocks</span>
+}</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: ESTRUCTURA DEL PROYECTO -->
+      <section>
+        <div class="kicker">Organización</div>
+        <h2>Estructura de un Proyecto Spring Boot</h2>
+        <div class="two-col">
+          <div class="code" style="font-size: .5em; max-height: 400px;">
+src/
+├── main/
+│   ├── java/com/example/app/
+│   │   ├── AppApplication.java          ← @SpringBootApplication
+│   │   ├── chef/
+│   │   │   ├── controller/
+│   │   │   │   └── ChefController.java  ← @RestController
+│   │   │   ├── service/
+│   │   │   │   └── ChefService.java     ← @Service
+│   │   │   ├── repository/
+│   │   │   │   └── ChefRepository.java  ← @Repository
+│   │   │   ├── entity/
+│   │   │   │   └── Chef.java            ← @Entity
+│   │   │   ├── dto/
+│   │   │   │   ├── ChefRequest.java     ← record
+│   │   │   │   └── ChefResponse.java    ← record
+│   │   │   └── mapper/
+│   │   │       └── ChefMapper.java      ← static
+│   │   └── common/
+│   │       └── exception/
+│   │           └── GlobalExceptionHandler.java
+│   └── resources/
+│       └── application.yml              ← Configuración
+├── test/
+│   └── java/com/example/app/
+│       ├── chef/
+│       │   ├── service/ChefServiceTest.java
+│       │   ├── mapper/ChefMapperTest.java
+│       │   └── controller/ChefControllerTest.java
+│       ├── integration/ChefIntegrationTest.java
+│       └── e2e/ChefE2ETest.java</div>
+          <div>
+            <h3 style="margin-top: 0;">Convenciones</h3>
+            <ul>
+              <li><strong>Paquetes por feature</strong> (chef/, dish/, client/) no por capa.</li>
+              <li><strong>DTOs como Records:</strong> Desde Java 14, los records son ideales para DTOs inmutables.</li>
+              <li><strong>application.yml:</strong> Configuración en formato YAML con perfiles (dev, test, prod).</li>
+              <li><strong>Pruebas separadas:</strong> Unitarias en paquete del módulo, integración y E2E en paquetes propios.</li>
+            </ul>
+            <h3>Archivos clave</h3>
+            <ul>
+              <li><strong>build.gradle / pom.xml:</strong> Dependencias y plugins del proyecto.</li>
+              <li><strong>application.yml:</strong> Puerto, BD, JPA, logging.</li>
+              <li><strong>application-test.yml:</strong> Perfil de test con H2 en memoria.</li>
+              <li><strong>compose.yml:</strong> Docker Compose para PostgreSQL.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: OTRAS ANOTACIONES ÚTILES -->
+      <section>
+        <div class="kicker">Más anotaciones</div>
+        <h2>Otras Anotaciones Importantes</h2>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="card">
+            <h3>Validación</h3>
+            <table class="tool-table">
+              <tr><td><span class="anno">@Valid</span></td><td>Activa la validación del DTO recibido.</td></tr>
+              <tr><td><span class="anno">@NotNull</span></td><td>El campo no puede ser null.</td></tr>
+              <tr><td><span class="anno">@NotBlank</span></td><td>No puede ser null ni vacío ni solo espacios.</td></tr>
+              <tr><td><span class="anno">@Size</span></td><td>Limita el tamaño (min/max) de un String o colección.</td></tr>
+              <tr><td><span class="anno">@Email</span></td><td>Valida formato de correo electrónico.</td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Excepciones y Transacciones</h3>
+            <table class="tool-table">
+              <tr><td><span class="anno">@ControllerAdvice</span></td><td>Manejo global de excepciones para toda la app.</td></tr>
+              <tr><td><span class="anno">@ExceptionHandler</span></td><td>Método que maneja una excepción específica.</td></tr>
+              <tr><td><span class="anno">@ResponseStatus</span></td><td>Define el código HTTP de la respuesta (404, 400, etc.).</td></tr>
+              <tr><td><span class="anno">@Transactional</span></td><td>Envuelve el método en una transacción de BD (commit/rollback).</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: REFERENCIAS -->
+      <section>
+        <div class="kicker">Referencias</div>
+        <h2>Fuentes consultadas</h2>
+        <ul class="source-list">
+          <li>Documentación oficial de Spring Boot: <a href="https://docs.spring.io/spring-boot/reference/">docs.spring.io/spring-boot</a></li>
+          <li>Spring Data JPA Reference: <a href="https://docs.spring.io/spring-data/jpa/reference/">docs.spring.io/spring-data/jpa</a></li>
+          <li>Baeldung — Spring Boot Tutorials: <a href="https://www.baeldung.com/spring-boot">baeldung.com/spring-boot</a></li>
+          <li>Project Lombok: <a href="https://projectlombok.org/">projectlombok.org</a></li>
+          <li>Spring Initializr: <a href="https://start.spring.io/">start.spring.io</a></li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      progress: true,
+      center: true,
+      transition: 'slide',
+      backgroundTransition: 'fade',
+      slideNumber: 'c/t'
+    });
+  </script>
+</body>
+</html>

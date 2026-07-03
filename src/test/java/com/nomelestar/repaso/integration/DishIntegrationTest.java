@@ -3,6 +3,7 @@ package com.nomelestar.repaso.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nomelestar.repaso.chef.entity.Chef;
 import com.nomelestar.repaso.chef.repository.ChefRepository;
+import com.nomelestar.repaso.client.repository.ClientRepository;
 import com.nomelestar.repaso.dish.dto.DishRequest;
 import com.nomelestar.repaso.dish.entity.Dish;
 import com.nomelestar.repaso.dish.repository.DishRepository;
@@ -46,10 +47,14 @@ class DishIntegrationTest {
     @Autowired
     private DishRepository dishRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
     private Chef chefPersistido;
 
     @BeforeEach
     void limpiarYPrepararDatos() {
+        clientRepository.deleteAll(); // Limpiar clientes primero (FK a dish_clients)
         dishRepository.deleteAll();
         chefRepository.deleteAll();
         // Crear un chef de apoyo para asociar platos
