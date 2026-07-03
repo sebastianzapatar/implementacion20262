@@ -42,6 +42,24 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Maneja las excepciones generadas por las validaciones de Spring (@Valid).
+     */
+    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(org.springframework.web.bind.MethodArgumentNotValidException ex) {
+        String mensaje = ex.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .reduce((m1, m2) -> m1 + ", " + m2)
+                .orElse(ex.getMessage());
+                
+        ErrorResponse error = new ErrorResponse(
+                "Error de validación: " + mensaje,
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
      * Maneja cualquier otra excepción no capturada (Error 500).
      */
     @ExceptionHandler(Exception.class)

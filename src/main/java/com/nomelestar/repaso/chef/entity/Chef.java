@@ -43,6 +43,7 @@ public class Chef {
     /**
      * Nombre del Chef.
      */
+    @jakarta.persistence.Column(nullable = false, length = 100)
     private String nombre;
 
     /**

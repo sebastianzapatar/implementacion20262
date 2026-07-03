@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 /**
  * Capa de Presentación (Controller).
@@ -39,7 +40,7 @@ public class ChefController {
      */
     @Operation(summary = "Crear un nuevo chef", description = "Crea un chef con el nombre proporcionado y lo guarda en la base de datos.")
     @PostMapping
-    public ResponseEntity<ChefResponse> crearChef(@RequestBody ChefRequest request) {
+    public ResponseEntity<ChefResponse> crearChef(@Valid @RequestBody ChefRequest request) {
         ChefResponse response = chefService.crearChef(request);
         // Devuelve un HTTP Status 201 (CREATED)
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -71,9 +72,9 @@ public class ChefController {
      * Endpoint PUT: Actualizar completamente un chef.
      * URL ejemplo: http://localhost:8080/api/chefs/550e8400-e29b-41d4-a716-446655440000
      */
-    @Operation(summary = "Actualizar un chef", description = "Actualiza los datos (nombre) de un chef existente. Lanza un error si el Chef no existe.")
+    @Operation(summary = "Actualizar los datos de un chef", description = "Permite modificar el nombre de un chef por su ID.")
     @PutMapping("/{id}")
-    public ResponseEntity<ChefResponse> actualizarChef(@PathVariable UUID id, @RequestBody ChefRequest request) {
+    public ResponseEntity<ChefResponse> actualizarChef(@PathVariable UUID id, @Valid @RequestBody ChefRequest request) {
         ChefResponse response = chefService.actualizarChef(id, request);
         return ResponseEntity.ok(response);
     }

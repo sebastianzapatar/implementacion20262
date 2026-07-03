@@ -223,7 +223,6 @@ class DishServiceTest {
                     new BigDecimal("28000"), chef.getId());
 
             when(dishRepository.findById(platoId)).thenReturn(Optional.of(platoExistente));
-            when(chefRepository.findById(chef.getId())).thenReturn(Optional.of(chef));
             when(dishRepository.save(any(Dish.class))).thenAnswer(inv -> inv.getArgument(0));
 
             // Act

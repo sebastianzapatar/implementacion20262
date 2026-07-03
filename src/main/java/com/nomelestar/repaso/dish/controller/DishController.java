@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/dishes")
@@ -30,7 +31,7 @@ public class DishController {
 
     @Operation(summary = "Crear un nuevo plato", description = "Crea un plato y lo asocia a un Chef existente mediante su chefId.")
     @PostMapping
-    public ResponseEntity<DishResponse> crearPlato(@RequestBody DishRequest request) {
+    public ResponseEntity<DishResponse> crearPlato(@Valid @RequestBody DishRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(dishService.crearPlato(request));
     }
 
@@ -48,7 +49,7 @@ public class DishController {
 
     @Operation(summary = "Actualizar un plato", description = "Actualiza los datos de un plato existente. También requiere un chefId válido.")
     @PutMapping("/{id}")
-    public ResponseEntity<DishResponse> actualizarPlato(@PathVariable UUID id, @RequestBody DishRequest request) {
+    public ResponseEntity<DishResponse> actualizarPlato(@PathVariable UUID id, @Valid @RequestBody DishRequest request) {
         return ResponseEntity.ok(dishService.actualizarPlato(id, request));
     }
 

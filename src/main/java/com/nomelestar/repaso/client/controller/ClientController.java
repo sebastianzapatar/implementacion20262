@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import jakarta.validation.Valid;
 
 /**
  * Controller para la gestión de Clientes y sus relaciones Muchos a Muchos con Platos.
@@ -35,7 +36,7 @@ public class ClientController {
 
     @Operation(summary = "Crear un nuevo cliente")
     @PostMapping
-    public ResponseEntity<ClientResponse> crearCliente(@RequestBody ClientRequest request) {
+    public ResponseEntity<ClientResponse> crearCliente(@Valid @RequestBody ClientRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.crearCliente(request));
     }
 
@@ -53,7 +54,7 @@ public class ClientController {
 
     @Operation(summary = "Actualizar un cliente")
     @PutMapping("/{id}")
-    public ResponseEntity<ClientResponse> actualizarCliente(@PathVariable UUID id, @RequestBody ClientRequest request) {
+    public ResponseEntity<ClientResponse> actualizarCliente(@PathVariable UUID id, @Valid @RequestBody ClientRequest request) {
         return ResponseEntity.ok(clientService.actualizarCliente(id, request));
     }
 

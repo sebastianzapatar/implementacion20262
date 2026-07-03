@@ -38,10 +38,13 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @jakarta.persistence.Column(nullable = false, length = 100)
     private String nombre;
 
+    @jakarta.persistence.Column(length = 255)
     private String descripcion;
 
+    @jakarta.persistence.Column(nullable = false)
     private BigDecimal precio;
 
     /**
