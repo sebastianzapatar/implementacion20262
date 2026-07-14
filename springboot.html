@@ -555,11 +555,41 @@ class Dish {
       </section>
 
       <section>
+        <div class="kicker">Modelo de Datos</div>
+        <h2>Esquema de la Base de Datos</h2>
+        <div class="code" style="display: flex; justify-content: center; margin-bottom: 20px;">
+          <pre><code class="spring">┌──────────────────┐         ┌──────────────────┐         ┌──────────────────┐
+│      Chef        │         │      Dish        │         │     Client       │
+├──────────────────┤         ├──────────────────┤         ├──────────────────┤
+│ id       (UUID)  │ 1────N  │ id       (UUID)  │ N────M  │ id       (UUID)  │
+│ nombre   (String)│◄────────│ nombre   (String)│───────► │ nombre   (String)│
+│ platos   (List)  │         │ descripcion (Str)│         │ email    (String)│
+│                  │         │ precio  (Decimal)│         │ platos   (List)  │
+│                  │         │ chef_id (FK)     │         │                  │
+└──────────────────┘         └──────────────────┘         └──────────────────┘</code></pre>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>1:N (Uno a Muchos)</h3>
+            <p><strong>Chef → Dish</strong>. Un Chef puede crear muchos Platos. La FK <code>chef_id</code> vive en la tabla Dishes.</p>
+          </div>
+          <div class="card">
+            <h3>N:M (Muchos a Muchos)</h3>
+            <p><strong>Client ↔ Dish</strong>. Un Cliente consume muchos platos, un plato es consumido por muchos. Requiere tabla <code>dish_clients</code>.</p>
+          </div>
+          <div class="card">
+            <h3>Cascada (CascadeType)</h3>
+            <p>Si se elimina un Chef, se eliminan todos sus platos asociados automáticamente gracias a <code>CascadeType.ALL</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <div class="kicker">Relaciones</div>
         <h2>Cómo pensar relaciones JPA</h2>
         <div class="grid-3">
           <div class="card"><h3>1:N</h3><p><strong>Chef → Dish</strong>. Un chef tiene muchos platos. La FK normalmente vive en <code>Dish</code>.</p><div class="code">Dish.chef_id → Chef.id</div></div>
-          <div class="card"><h3>N:M</h3><p><strong>Client ↔ Dish</strong>. Se requiere tabla intermedia para registrar consumos.</p><div class="code">client_dish(client_id, dish_id)</div></div>
+          <div class="card"><h3>N:M</h3><p><strong>Client ↔ Dish</strong>. Se requiere tabla intermedia para registrar consumos.</p><div class="code">dish_clients(client_id, dish_id)</div></div>
           <div class="card"><h3>1:1</h3><p><strong>User ↔ Profile</strong>. Útil cuando una entidad complementa a otra.</p><div class="code">profile.user_id UNIQUE</div></div>
         </div>
         <div class="card" style="margin-top:16px;">
@@ -732,6 +762,28 @@ class ChefService {
   private final ChefRepository repository;
   private final ChefMapper mapper;
 }</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="kicker">Concepto Clave</div>
+        <h2>¿Qué es exactamente un "Bean"?</h2>
+        <div class="two-col-wide">
+          <div>
+            <p>En el mundo de Spring, un <strong>Bean</strong> es simplemente un objeto Java, pero con una gran diferencia: <strong>su ciclo de vida es administrado por el contenedor de Spring (Inversión de Control)</strong>.</p>
+            <ul>
+              <li><strong>Creación:</strong> Tú no usas <code>new MiClase()</code>. Spring escanea el código (buscando <code>@Component</code>, <code>@Service</code>, etc.) y crea la instancia al iniciar.</li>
+              <li><strong>Configuración:</strong> Spring le inyecta las dependencias que necesita (otros beans) automáticamente.</li>
+              <li><strong>Gestión:</strong> Por defecto son <em>Singleton</em> (existe una única instancia compartida en toda la aplicación).</li>
+              <li><strong>Destrucción:</strong> Spring se encarga de destruirlos correctamente cuando la app se apaga.</li>
+            </ul>
+          </div>
+          <div class="hero-card">
+            <h3>La analogía del Restaurante</h3>
+            <p style="font-size:.62em; color:white; margin-bottom: 10px;">Imagina que Spring es el <strong>Gerente</strong>.</p>
+            <p>Tú (el programador) escribes las "descripciones de cargo" (las clases Java).</p>
+            <p>El Gerente (Spring) contrata a las personas (crea los <strong>Beans</strong>), les entrega las herramientas que necesitan para trabajar (<strong>Inyección de Dependencias</strong>) y coordina que todos trabajen juntos sin que tú tengas que hacerlo manualmente.</p>
+          </div>
         </div>
       </section>
 

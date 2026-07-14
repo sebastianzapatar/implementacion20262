@@ -92,6 +92,21 @@ src/main/java/com/nomelestar/repaso/
 │   └── service/
 │       └── DishService.java
 │
+├── client/                           # Feature: Cliente
+│   ├── controller/
+│   │   └── ClientController.java
+│   ├── dto/
+│   │   ├── ClientRequest.java
+│   │   └── ClientResponse.java
+│   ├── entity/
+│   │   └── Client.java               # Entidad JPA con @ManyToMany hacia Dish
+│   ├── mapper/
+│   │   └── ClientMapper.java
+│   ├── repository/
+│   │   └── ClientRepository.java
+│   └── service/
+│       └── ClientService.java
+│
 └── common/                           # Código compartido entre features
     ├── config/
     │   └── OpenApiConfig.java        # Configuración de Swagger/OpenAPI
@@ -109,19 +124,20 @@ src/main/java/com/nomelestar/repaso/
 ### Relación entre Entidades
 
 ```
-┌──────────────────┐         ┌──────────────────┐
-│      Chef        │         │      Dish         │
-├──────────────────┤         ├──────────────────┤
-│ id       (UUID)  │ 1────N  │ id       (UUID)  │
-│ nombre   (String)│◄────────│ nombre   (String) │
-│ platos   (List)  │         │ descripcion (Str) │
-│                  │         │ precio  (Decimal) │
-│                  │         │ chef_id (FK-UUID)  │
-└──────────────────┘         └──────────────────┘
+┌──────────────────┐         ┌──────────────────┐         ┌──────────────────┐
+│      Chef        │         │      Dish         │         │     Client       │
+├──────────────────┤         ├──────────────────┤         ├──────────────────┤
+│ id       (UUID)  │ 1────N  │ id       (UUID)  │ N────M  │ id       (UUID)  │
+│ nombre   (String)│◄────────│ nombre   (String) │───────►│ nombre   (String)│
+│ platos   (List)  │         │ descripcion (Str) │         │ email    (String)│
+│                  │         │ precio  (Decimal) │         │ platos   (List)  │
+│                  │         │ chef_id (FK-UUID)  │         │                  │
+└──────────────────┘         └──────────────────┘         └──────────────────┘
 ```
 
 - **Un Chef puede crear muchos Platos** → Relación `@OneToMany`
 - **Un Plato pertenece a un solo Chef** → Relación `@ManyToOne`
+- **Un Cliente puede consumir muchos Platos y un Plato puede ser consumido por muchos Clientes** → Relación `@ManyToMany` (con tabla intermedia `dish_clients`)
 - Si se elimina un Chef, se eliminan todos sus platos (`CascadeType.ALL`)
 
 ---
@@ -183,6 +199,37 @@ src/main/java/com/nomelestar/repaso/
   "precio": 45.99,
   "chefId": "550e8400-e29b-41d4-a716-446655440000",
   "nombreChef": "Gordon Ramsay"
+}
+```
+
+### Clientes (`/api/clients`)
+
+| Método | URL | Descripción |
+|---|---|---|
+| `POST` | `/api/clients` | Crear un nuevo cliente |
+| `GET` | `/api/clients` | Obtener todos los clientes |
+| `GET` | `/api/clients/{id}` | Obtener un cliente por ID |
+| `PUT` | `/api/clients/{id}` | Actualizar un cliente |
+| `DELETE` | `/api/clients/{id}` | Eliminar un cliente |
+| `POST` | `/api/clients/{clientId}/dishes/{dishId}` | Registrar el consumo de un plato por un cliente |
+| `GET` | `/api/clients/stats/chef-mas-vendido` | Obtener el chef con más platos vendidos |
+| `GET` | `/api/clients/{clientId}/chefs/{chefId}/platos` | Obtener platos preferidos de un cliente por chef |
+
+**Ejemplo de Request (POST):**
+```json
+{
+  "nombre": "Juan Pérez",
+  "email": "juan.perez@example.com"
+}
+```
+
+**Ejemplo de Response:**
+```json
+{
+  "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+  "nombre": "Juan Pérez",
+  "email": "juan.perez@example.com",
+  "platosConsumidos": []
 }
 ```
 
