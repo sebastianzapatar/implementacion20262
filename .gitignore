@@ -35,3 +35,14 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Variables de entorno / secretos ###
+# NUNCA subir el .env: contiene usuario y contraseña de la base de datos.
+# El .env.template sí se versiona, porque solo tiene valores de ejemplo.
+.env
+.env.*
+!.env.template
+
+### Logs ###
+*.log
+app_logs.txt

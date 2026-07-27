@@ -75,7 +75,7 @@
     .reveal h1 { font-size: 2.28em; margin: 0 0 .16em; }
     .reveal h2 { font-size: 1.56em; margin: 0 0 .44em; }
     .reveal h3 { font-size: .88em; color: var(--cyan); margin: 0 0 .34em; }
-    .reveal p, .reveal li { color: var(--muted); font-size: .55em; line-height: 1.34; }
+    .reveal p, .reveal li { color: var(--muted); font-size: .60em; line-height: 1.34; }
     .reveal li { margin-bottom: .34em; }
     .reveal ul, .reveal ol { margin-left: 1em; }
     .reveal strong { color: var(--white); font-weight: 850; }
@@ -90,7 +90,7 @@
       border: 1px solid var(--line);
       border-radius: 999px;
       color: var(--cyan);
-      font-size: .40em;
+      font-size: .44em;
       font-weight: 850;
       letter-spacing: .08em;
       text-transform: uppercase;
@@ -119,7 +119,7 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
     }
     .card h3 { margin-top: 0; }
-    .card p, .card li { font-size: .49em; }
+    .card p, .card li { font-size: .56em; }
 
     .hero-card {
       border-radius: 28px;
@@ -138,10 +138,10 @@
       padding: 16px 18px;
       text-align: left;
       overflow: auto;
-      max-height: 350px;
+      max-height: 430px;
       color: #e8f6ff;
-      font-size: .41em;
-      line-height: 1.35;
+      font-size: .47em;
+      line-height: 1.38;
       white-space: pre-wrap;
       font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
@@ -159,7 +159,7 @@
       padding: 6px 10px;
       border-radius: 999px;
       margin: 4px;
-      font-size: .36em;
+      font-size: .45em;
       color: var(--white);
       background: rgba(255,255,255,.08);
       white-space: nowrap;
@@ -174,13 +174,17 @@
       padding: 4px 9px;
       border-radius: 10px;
       font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-      font-size: .40em;
+      font-size: .53em;
       color: var(--spring-2);
       font-weight: 800;
       margin: 2px;
     }
 
-    .tool-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .40em; }
+    /* OJO: .anno vive dentro de un <td>, y los em se multiplican.
+       Con .anno{.53em} dentro de .tool-table{.48em} el resultado real era
+       ~.25em (11px): ilegible en videobeam. Acá se fija relativo a la celda. */
+    .tool-table .anno { font-size: 1.02em; padding: 3px 8px; }
+    .tool-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .48em; }
     .tool-table th, .tool-table td { border-bottom: 1px solid var(--line); padding: 8px 7px; text-align: left; color: var(--muted); vertical-align: top; }
     .tool-table th { color: var(--white); font-weight: 850; }
     .tool-table tr:last-child td { border-bottom: 0; }
@@ -194,7 +198,7 @@
       text-align: center;
     }
     .metric b { display: block; font-size: .92em; color: var(--white); margin-bottom: 5px; }
-    .metric span { display: block; font-size: .35em; color: var(--soft); }
+    .metric span { display: block; font-size: .42em; color: var(--soft); }
 
     .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; align-items: center; margin-top: 18px; }
     .node {
@@ -208,16 +212,16 @@
       flex-direction: column;
       justify-content: center;
     }
-    .node h3 { font-size: .56em; margin-bottom: 4px; }
-    .node p { font-size: .36em; margin: 0; }
+    .node h3 { font-size: .62em; margin-bottom: 4px; }
+    .node p { font-size: .43em; margin: 0; }
     .arrow { color: var(--cyan); font-size: .8em; text-align: center; }
     .ladder { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
     .step { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: center; }
     .step-num { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: rgba(109,179,63,.18); border: 1px solid rgba(109,179,63,.48); color: var(--spring-2); font-size: .62em; font-weight: 900; }
     .step p { margin: 0; }
 
-    .mini-title { font-size: .52em; color: var(--white); font-weight: 850; margin-bottom: 6px; }
-    .footnote { position: absolute; bottom: 13px; left: 34px; right: 34px; font-size: .30em !important; color: rgba(255,255,255,.45) !important; }
+    .mini-title { font-size: .60em; color: var(--white); font-weight: 850; margin-bottom: 6px; }
+    .footnote { position: absolute; bottom: 13px; left: 34px; right: 34px; font-size: .36em !important; color: rgba(255,255,255,.45) !important; }
 
     @media (max-width: 900px) {
       .two-col, .two-col-wide, .grid-2, .grid-3, .grid-4, .metric-row, .flow { grid-template-columns: 1fr; }
@@ -739,6 +743,162 @@ class GlobalExceptionHandler {
       </section>
 
       <section>
+        <div class="kicker">Muchos a Muchos</div>
+        <h2>Consulta compleja con @Query</h2>
+        <div class="two-col">
+          <div>
+            <p>Se usa <strong>@Query</strong> cuando aparecen agregados, proyecciones a DTO, o el nombre del método derivado sería impronunciable.</p>
+            <ul>
+              <li><strong>Doble JOIN:</strong> por la ManyToMany y por el chef.</li>
+              <li><strong>GROUP BY:</strong> agrupa por plato.</li>
+              <li><strong>HAVING:</strong> filtra sobre el agregado (el WHERE no puede).</li>
+              <li><strong>new ...():</strong> devuelve un DTO, no entidades.</li>
+            </ul>
+          </div>
+          <div class="code"><span class="green">@Query</span>("""
+  SELECT <span class="cyan">new</span> ….DishPopularityResponse(
+    d.id, d.nombre, ch.nombre, d.precio,
+    <span class="cyan">COUNT(DISTINCT</span> cl.id), <span class="cyan">SUM(</span>d.precio))
+  FROM Dish d
+    <span class="cyan">JOIN</span> d.clientes cl  <span class="gray">// ManyToMany</span>
+    <span class="cyan">JOIN</span> d.chef ch      <span class="gray">// ManyToOne</span>
+  WHERE d.precio &gt;= :precioMinimo
+  <span class="cyan">GROUP BY</span> d.id, d.nombre, ch.nombre, d.precio
+  <span class="cyan">HAVING</span> COUNT(DISTINCT cl.id) &gt;= :minimo
+  ORDER BY COUNT(DISTINCT cl.id) DESC
+""")
+List&lt;DishPopularityResponse&gt; ranking(…);</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="kicker">Muchos a Muchos</div>
+        <h2>El mismo JOIN sin @Query</h2>
+        <div class="two-col">
+          <div>
+            <p>Spring Data arma el JOIN leyendo el <strong>nombre del método</strong>. No hay JPQL que mantener.</p>
+            <p>El <code>_</code> marca dónde termina una propiedad y empieza la siguiente:</p>
+            <p><code>Clientes</code> <span class="accent">→</span> atributo de <code>Dish</code><br>
+               <code>Id</code> <span class="accent">→</span> atributo de <code>Client</code></p>
+          </div>
+          <div class="code"><span class="gray">// JOIN con la intermedia dish_clients</span>
+List&lt;Dish&gt; findBy<span class="cyan">Clientes_Id</span>(UUID clientId);
+
+<span class="gray">// Doble JOIN + orden, sin una línea de JPQL</span>
+List&lt;Dish&gt; findBy<span class="cyan">Clientes_Id</span>And<span class="cyan">Chef_Id</span>
+    OrderByPrecioDesc(UUID cl, UUID ch);
+
+<span class="gray">// COUNT y EXISTS también hacen el JOIN</span>
+long    countBy<span class="cyan">Clientes_Id</span>(UUID clientId);
+boolean existsByIdAnd<span class="cyan">Clientes_Id</span>(
+    UUID dishId, UUID clientId);</div>
+        </div>
+        <div class="footnote">Regla práctica: usar el método derivado mientras alcance; pasar a @Query cuando aparezcan GROUP BY, HAVING o proyecciones.</div>
+      </section>
+
+      <section>
+        <div class="kicker">Rendimiento</div>
+        <h2>El problema N+1</h2>
+        <div class="two-col">
+          <div>
+            <p>Las relaciones son <code>LAZY</code>: la colección no se trae hasta que alguien la toca.</p>
+            <p>Si el <strong>mapper la toca dentro de un bucle</strong>, se dispara una consulta por cada fila.</p>
+            <div class="card">
+              <p><span class="danger">100 chefs = 101 consultas.</span> Con <code>open-in-view</code> en true esto pasa <strong>en silencio</strong>.</p>
+            </div>
+          </div>
+          <div class="code"><span class="gray">// ❌ 1 consulta + N consultas</span>
+chefRepository.findAll().stream()
+    .map(ChefMapper::toResponse)
+    <span class="gray">// ↑ adentro toca getPlatos()</span>
+    .toList();
+
+<span class="gray">// ✅ 1 sola consulta con JOIN de carga</span>
+<span class="green">@EntityGraph</span>(attributePaths = {<span class="cyan">"platos"</span>})
+List&lt;Chef&gt; findAllBy();</div>
+        </div>
+        <div class="footnote">Se llama findAllBy() y no findAll() porque findAll() es heredado de JpaRepository y no admite la anotación.</div>
+      </section>
+
+      <section>
+        <div class="kicker">Rendimiento</div>
+        <h2>@EntityGraph en la relación ManyToMany</h2>
+        <div class="two-col">
+          <div>
+            <div class="mini-title">Con @EntityGraph</div>
+            <div class="code"><span class="gray">// plato + chef en la misma consulta</span>
+<span class="green">@EntityGraph</span>(attributePaths = {<span class="cyan">"chef"</span>})
+List&lt;Dish&gt; findByClientes_Nombre(String n);
+
+<span class="gray">// varios niveles: cliente → platos → chef</span>
+<span class="green">@EntityGraph</span>(attributePaths = {
+    <span class="cyan">"platosConsumidos"</span>,
+    <span class="cyan">"platosConsumidos.chef"</span>})
+List&lt;Client&gt; findAllBy();</div>
+          </div>
+          <div>
+            <div class="mini-title">Lo mismo escrito a mano</div>
+            <div class="code"><span class="green">@Query</span>("""
+  SELECT <span class="cyan">DISTINCT</span> c FROM Client c
+    <span class="cyan">LEFT JOIN FETCH</span> c.platosConsumidos d
+    <span class="cyan">LEFT JOIN FETCH</span> d.chef
+""")
+List&lt;Client&gt; findAllConPlatosYChef();</div>
+            <p><code>DISTINCT</code> porque el FETCH duplica al cliente una vez por plato. <code>LEFT</code> para no perder a los que aún no consumieron nada.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="kicker">Transacciones</div>
+        <h2>open-in-view: el default que tapa problemas</h2>
+        <div class="two-col">
+          <div>
+            <p>Spring Boot trae <code>open-in-view: true</code>: deja la sesión de Hibernate abierta durante <strong>todo el request</strong>.</p>
+            <ul>
+              <li>Hace que todo "funcione", pero <strong>esconde el N+1</strong>.</li>
+              <li>Retiene la conexión a la BD mientras se serializa el JSON.</li>
+              <li>Spring avisa con un warning al arrancar.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code">spring:
+  jpa:
+    <span class="cyan">open-in-view: false</span></div>
+            <div class="card" style="margin-top:16px">
+              <p>Al apagarlo, la sesión vive <strong>solo lo que dura la transacción</strong>. Por eso hay que ser explícito con <code>@Transactional</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="kicker">Transacciones</div>
+        <h2>@Transactional: dónde vive la sesión</h2>
+        <div class="two-col">
+          <div class="code"><span class="gray">// ❌ sin transacción al mapear</span>
+public ClientResponse actualizar(UUID id) {
+  Client c = buscarPorId(id);
+  <span class="gray">// ↑ abre y cierra la tx</span>
+  return ClientMapper.toResponse(c);
+}
+<span class="danger">// LazyInitializationException al leer
+// getPlatosConsumidos() fuera de la sesión</span></div>
+          <div class="code"><span class="gray">// ✅ la tx cubre también el mapeo</span>
+<span class="green">@Transactional</span>
+public ClientResponse actualizar(UUID id) { … }
+
+<span class="gray">// lecturas: readOnly evita el dirty checking</span>
+<span class="green">@Transactional</span>(readOnly = true)
+public List&lt;ClientResponse&gt; obtenerTodos() { … }</div>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <p><span class="ok">La regla:</span> <code>@Transactional</code> resuelve la <strong>corrección</strong> (que no explote). <code>@EntityGraph</code> resuelve el <strong>rendimiento</strong> (que no sean N consultas). Se usan juntos.</p>
+        </div>
+        <div class="footnote">@Transactional solo funciona en métodos públicos llamados desde otro bean: Spring lo implementa con un proxy.</div>
+      </section>
+
+      <section>
         <div class="kicker">IoC</div>
         <h2>Inyección de dependencias</h2>
         <div class="two-col">
@@ -770,19 +930,18 @@ class ChefService {
         <h2>¿Qué es exactamente un "Bean"?</h2>
         <div class="two-col-wide">
           <div>
-            <p>En el mundo de Spring, un <strong>Bean</strong> es simplemente un objeto Java, pero con una gran diferencia: <strong>su ciclo de vida es administrado por el contenedor de Spring (Inversión de Control)</strong>.</p>
+            <p>Un <strong>Bean</strong> es un objeto Java cuyo <strong>ciclo de vida lo administra el contenedor de Spring</strong>.</p>
             <ul>
-              <li><strong>Creación:</strong> Tú no usas <code>new MiClase()</code>. Spring escanea el código (buscando <code>@Component</code>, <code>@Service</code>, etc.) y crea la instancia al iniciar.</li>
-              <li><strong>Configuración:</strong> Spring le inyecta las dependencias que necesita (otros beans) automáticamente.</li>
-              <li><strong>Gestión:</strong> Por defecto son <em>Singleton</em> (existe una única instancia compartida en toda la aplicación).</li>
-              <li><strong>Destrucción:</strong> Spring se encarga de destruirlos correctamente cuando la app se apaga.</li>
+              <li><strong>Creación:</strong> no usás <code>new MiClase()</code>. Spring escanea <code>@Component</code>, <code>@Service</code>, etc. y crea la instancia al iniciar.</li>
+              <li><strong>Configuración:</strong> le inyecta sus dependencias automáticamente.</li>
+              <li><strong>Gestión:</strong> por defecto son <em>Singleton</em>: una única instancia compartida.</li>
+              <li><strong>Destrucción:</strong> Spring los destruye al apagar la app.</li>
             </ul>
           </div>
           <div class="hero-card">
             <h3>La analogía del Restaurante</h3>
-            <p style="font-size:.62em; color:white; margin-bottom: 10px;">Imagina que Spring es el <strong>Gerente</strong>.</p>
-            <p>Tú (el programador) escribes las "descripciones de cargo" (las clases Java).</p>
-            <p>El Gerente (Spring) contrata a las personas (crea los <strong>Beans</strong>), les entrega las herramientas que necesitan para trabajar (<strong>Inyección de Dependencias</strong>) y coordina que todos trabajen juntos sin que tú tengas que hacerlo manualmente.</p>
+            <p>Spring es el <strong>Gerente</strong>. Vos escribís las "descripciones de cargo" (las clases).</p>
+            <p>El Gerente contrata a las personas (crea los <strong>Beans</strong>), les entrega las herramientas que necesitan (<strong>Inyección de Dependencias</strong>) y coordina que trabajen juntas, sin que vos lo hagas a mano.</p>
           </div>
         </div>
       </section>
@@ -820,32 +979,59 @@ class ChefService {
           <div>
             <p>Los perfiles separan ambientes y evitan mezclar credenciales, puertos o bases de datos.</p>
             <div class="ladder">
-              <div class="step"><div class="step-num">dev</div><p>PostgreSQL local, logs detallados, datos de prueba.</p></div>
-              <div class="step"><div class="step-num">test</div><p>H2 o Testcontainers, base limpia, pruebas automatizadas.</p></div>
-              <div class="step"><div class="step-num">prod</div><p>Variables de entorno, logs controlados, migraciones y monitoreo.</p></div>
+              <div class="step"><div class="step-num">dev</div><p>PostgreSQL local, logs detallados, <code>ddl-auto: update</code>.</p></div>
+              <div class="step"><div class="step-num">test</div><p>H2 en memoria, base limpia, pruebas automatizadas.</p></div>
+              <div class="step"><div class="step-num">prod</div><p>Variables de entorno, <code>ddl-auto: validate</code>, logs controlados.</p></div>
             </div>
           </div>
-          <div class="code">spring:
-  application:
-    name: restaurant-api
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    open-in-view: false
+          <div>
+            <div class="mini-title">Cómo se debe llamar el archivo</div>
+            <div class="code">application.yml              <span class="gray">← base, siempre</span>
+application-<span class="cyan">dev</span>.yml          <span class="gray">← perfil "dev"</span>
+application-<span class="cyan">test</span>.yml         <span class="gray">← perfil "test"</span>
+application-<span class="cyan">prod</span>.yml         <span class="gray">← perfil "prod"</span>
+application-<span class="cyan">docker</span>.yml       <span class="gray">← perfil "docker"</span>
 
-server:
-  port: ${PORT:8080}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics</div>
+<span class="warn">application-<span class="cyan">&lt;perfil&gt;</span>.yml</span>
+   <span class="gray">↑ guion, NO guion bajo ni punto</span>
+   <span class="gray">↑ distingue mayúsculas</span></div>
+            <p>Si el nombre no coincide, Spring <strong>no avisa</strong>: ignora el archivo y arranca con la config base.</p>
+          </div>
         </div>
+        <div class="footnote">application.yml se carga siempre y guarda lo común; el archivo del perfil se aplica encima y pisa lo que repita.</div>
+      </section>
+
+      <section>
+        <div class="kicker">Configuración</div>
+        <h2>Cómo se activa un perfil</h2>
+        <div class="two-col">
+          <div>
+            <div class="mini-title">Las 4 formas, de menor a mayor prioridad</div>
+            <div class="code"><span class="gray">// 1. En el propio application.yml</span>
+spring:
+  profiles:
+    active: dev
+
+<span class="gray">// 2. Variable de entorno (Docker, CI)</span>
+SPRING_PROFILES_ACTIVE=prod
+
+<span class="gray">// 3. Argumento al ejecutar</span>
+java -jar app.jar --spring.profiles.active=prod
+
+<span class="gray">// 4. Propiedad de la JVM</span>
+java -Dspring.profiles.active=prod -jar app.jar</div>
+          </div>
+          <div>
+            <div class="mini-title">En los tests</div>
+            <div class="code"><span class="green">@SpringBootTest</span>
+<span class="green">@ActiveProfiles</span>(<span class="cyan">"test"</span>)
+class MiTest { … }</div>
+            <div class="card" style="margin-top:16px">
+              <p><span class="warning">Cuidado con el nombre de las variables:</span> usar <code>${DB_URL}</code> y no <code>${SPRING_DATASOURCE_URL}</code>. Este último normaliza a <code>spring.datasource.url</code>, que es la propiedad que se está definiendo: queda una autorreferencia, el placeholder no se resuelve y llega el texto literal al driver.</p>
+            </div>
+          </div>
+        </div>
+        <div class="footnote">Se pueden activar varios a la vez: --spring.profiles.active=prod,metricas</div>
       </section>
 
       <section>
@@ -881,23 +1067,39 @@ ResponseEntity&lt;ChefResponse&gt; create(
         <div class="kicker">Testing</div>
         <h2>Pruebas: pirámide recomendada</h2>
         <div class="grid-3">
-          <div class="card"><h3>Unitarias</h3><p>Service, mapper, validadores. Rápidas, sin contexto completo.</p><div class="code">JUnit + Mockito</div></div>
+          <div class="card"><h3>Unitarias</h3><p>Service, mapper, validadores. Rápidas, sin levantar el contexto.</p><div class="code">JUnit + Mockito</div></div>
           <div class="card"><h3>Web Slice</h3><p>Controller con MockMvc. Valida códigos HTTP, JSON y errores.</p><div class="code">@WebMvcTest</div></div>
-          <div class="card"><h3>Integración</h3><p>Contexto Spring, repositorios y BD. Verifica flujo real.</p><div class="code">@SpringBootTest</div></div>
+          <div class="card"><h3>Integración</h3><p>Contexto Spring, repositorios y BD. Verifica el flujo real.</p><div class="code">@SpringBootTest</div></div>
         </div>
-        <div class="code" style="margin-top: 16px;">@WebMvcTest(ChefController.class)
-class ChefControllerTest {
-  @Autowired MockMvc mockMvc;
-  @MockitoBean ChefService service;
+        <div class="footnote">Muchas unitarias, algunas de slice, pocas de integración: son las más lentas y las más frágiles.</div>
+      </section>
 
-  @Test
-  void shouldReturn201WhenChefIsCreated() throws Exception {
-    mockMvc.perform(post("/api/v1/chefs")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{\"name\":\"Ana\",\"specialty\":\"Sushi\",\"email\":\"ana@mail.com\"}"))
-      .andExpect(status().isCreated());
+      <section>
+        <div class="kicker">Testing</div>
+        <h2>Ejemplo: test de la capa web</h2>
+        <div class="two-col">
+          <div>
+            <p><code>@WebMvcTest</code> levanta <strong>solo la capa web</strong>: no arranca la base de datos ni los repositorios.</p>
+            <ul>
+              <li><code>@MockitoBean</code> reemplaza al service por un simulado.</li>
+              <li><code>MockMvc</code> hace la petición sin servidor real.</li>
+              <li>Se verifica el <strong>contrato HTTP</strong>: código, JSON y errores.</li>
+            </ul>
+          </div>
+          <div class="code"><span class="green">@WebMvcTest</span>(ChefController.class)
+class ChefControllerTest {
+  <span class="green">@Autowired</span> MockMvc mockMvc;
+  <span class="green">@MockitoBean</span> ChefService service;
+
+  <span class="green">@Test</span>
+  void devuelve201AlCrearChef() throws Exception {
+    mockMvc.perform(post("/api/chefs")
+        .contentType(APPLICATION_JSON)
+        .content("{\"nombre\":\"Ana\"}"))
+      .andExpect(status().<span class="cyan">isCreated</span>());
   }
 }</div>
+        </div>
       </section>
 
       <section>

@@ -39,3 +39,13 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Por defecto el plugin de Spring Boot genera DOS jars en build/libs:
+//   - repaso-0.0.1-SNAPSHOT.jar        -> el ejecutable (fat jar), el que sirve
+//   - repaso-0.0.1-SNAPSHOT-plain.jar  -> solo las clases, NO arranca solo
+// Tener los dos rompe el "COPY build/libs/*.jar app.jar" del Dockerfile, porque
+// el comodín encuentra dos archivos y Docker no sabe cuál copiar.
+// Desactivamos el "plain" porque este proyecto no lo usa como librería.
+tasks.named('jar') {
+    enabled = false
+}

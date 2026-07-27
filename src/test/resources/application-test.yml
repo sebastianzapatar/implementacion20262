@@ -1,0 +1,26 @@
+# =============================================================================
+# PERFIL "test"  ->  se activa con @ActiveProfiles("test") en las clases de prueba
+# =============================================================================
+# Vive en src/test/resources, así que solo existe al correr los tests y nunca
+# se empaqueta en el jar de la aplicación.
+#
+# Usa H2 en memoria: los tests no dependen de que Postgres esté levantado y
+# cada ejecución arranca con la base vacía.
+# =============================================================================
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      # create-drop: crea las tablas al empezar y las borra al terminar.
+      ddl-auto: create-drop
+    show-sql: false
+
+logging:
+  level:
+    org.hibernate.SQL: warn

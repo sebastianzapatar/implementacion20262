@@ -1,0 +1,35 @@
+# =============================================================================
+# PERFIL "prod"  ->  se activa con: spring.profiles.active=prod
+# =============================================================================
+# Configuración pensada para un despliegue real. Las diferencias importantes
+# frente a "dev" no son de estilo, son de seguridad y de integridad de datos.
+# =============================================================================
+
+spring:
+  datasource:
+    # Sin valores por defecto: en producción la app NO debe arrancar si falta
+    # una credencial. Es preferible un error al arrancar que quedar conectado
+    # a una base equivocada.
+    #
+    # Se usan nombres propios (DB_URL) y no SPRING_DATASOURCE_URL: ese último
+    # normaliza a spring.datasource.url, la misma propiedad que se está
+    # definiendo, y la autorreferencia deja el placeholder sin resolver.
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # "validate" solo verifica que las tablas coincidan con las entidades y
+      # falla si no. NUNCA "update" en producción: aplica cambios de esquema sin
+      # revisión, no borra ni renombra columnas, y termina ensuciando la base.
+      # Los cambios de esquema van con migraciones (Flyway o Liquibase).
+      ddl-auto: validate
+    # Imprimir cada consulta en producción llena el disco y filtra datos.
+    show-sql: false
+
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: warn

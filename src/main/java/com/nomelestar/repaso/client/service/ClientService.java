@@ -10,6 +10,7 @@ import com.nomelestar.repaso.client.mapper.ClientMapper;
 import com.nomelestar.repaso.client.repository.ClientRepository;
 import com.nomelestar.repaso.common.exception.BadRequestException;
 import com.nomelestar.repaso.common.exception.ResourceNotFoundException;
+import com.nomelestar.repaso.dish.dto.DishPopularityResponse;
 import com.nomelestar.repaso.dish.dto.DishResponse;
 import com.nomelestar.repaso.dish.entity.Dish;
 import com.nomelestar.repaso.dish.mapper.DishMapper;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,6 +41,7 @@ public class ClientService {
      * @param request Datos del cliente a crear (DTO).
      * @return El cliente creado convertido en DTO.
      */
+    @Transactional
     public ClientResponse crearCliente(ClientRequest request) {
         // 1. Validamos que los campos obligatorios vengan en la petición
         validarRequest(request);
@@ -46,6 +49,14 @@ public class ClientService {
         // 2. Convertimos el DTO (Request) a la Entidad (Client) para guardarlo
         Client nuevoCliente = ClientMapper.toEntity(request);
         
+        if (request.dishIds() != null && !request.dishIds().isEmpty()) {
+            List<Dish> dishes = dishRepository.findAllById(request.dishIds());
+            if (dishes.size() != request.dishIds().size()) {
+                throw new ResourceNotFoundException("Algunos platos no fueron encontrados");
+            }
+            nuevoCliente.getPlatosConsumidos().addAll(dishes);
+        }
+
         // 3. Persistimos el cliente en la base de datos usando el repositorio
         Client clienteGuardado = clientRepository.save(nuevoCliente);
         
@@ -56,17 +67,35 @@ public class ClientService {
     /**
      * Obtiene una lista con todos los clientes registrados.
      */
+    @Transactional(readOnly = true)
     public List<ClientResponse> obtenerTodos() {
-        // Obtenemos todos los registros, los convertimos a un Stream para mapearlos,
-        // y por cada Entidad, llamamos al mapper para convertirla en DTO de respuesta.
-        return clientRepository.findAll().stream()
+        // Usamos la consulta con JOIN FETCH para traer clientes + platos + chef
+        // en UNA sola consulta. Con findAll() el mapper disparaba una consulta
+        // extra por cada cliente al leer getPlatosConsumidos() (problema N+1).
+        return clientRepository.findAllConPlatosYChef().stream()
                 .map(ClientMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
     /**
+     * Ranking de los platos más consumidos del restaurante.
+     *
+     * <p>Delega en la consulta JPQL compleja {@code rankingPlatosMasConsumidos}
+     * (JOIN sobre la @ManyToMany + JOIN con chef + GROUP BY + HAVING + agregados).
+     * El repositorio ya devuelve DTOs, así que aquí no hay que mapear nada.
+     *
+     * @param precioMinimo   precio mínimo del plato a considerar
+     * @param minimoClientes cuántos clientes distintos debe tener como mínimo
+     */
+    @Transactional(readOnly = true)
+    public List<DishPopularityResponse> obtenerRankingPlatos(BigDecimal precioMinimo, long minimoClientes) {
+        return clientRepository.rankingPlatosMasConsumidos(precioMinimo, minimoClientes);
+    }
+
+    /**
      * Busca un cliente por su ID y lo retorna.
      */
+    @Transactional(readOnly = true)
     public ClientResponse obtenerPorId(UUID id) {
         // Delegamos la búsqueda y el manejo del error (404) a un método privado
         Client client = buscarPorIdOGenerarExcepcion(id);
@@ -76,6 +105,7 @@ public class ClientService {
     /**
      * Actualiza los datos de un cliente existente.
      */
+    @Transactional
     public ClientResponse actualizarCliente(UUID id, ClientRequest request) {
         // 1. Validamos los datos entrantes
         validarRequest(request);
@@ -96,7 +126,11 @@ public class ClientService {
     /**
      * Elimina físicamente un cliente de la base de datos.
      */
+    @Transactional
     public void eliminarCliente(UUID id) {
+        // Acá no hace falta limpiar dish_clients a mano: el cliente es el DUEÑO
+        // de la relación, así que Hibernate borra solo sus filas de la tabla
+        // intermedia. El problema aparece al borrar del otro lado (Dish/Chef).
         Client client = buscarPorIdOGenerarExcepcion(id);
         clientRepository.delete(client);
     }
@@ -128,6 +162,7 @@ public class ClientService {
     /**
      * Obtiene el Chef con más platos vendidos (comprados por clientes).
      */
+    @Transactional(readOnly = true)
     public ChefResponse obtenerChefConMasVentas() {
         // Llama a la consulta @Query (JPQL) definida en ClientRepository
         Chef chef = clientRepository.findChefConMasVentas()
@@ -138,6 +173,7 @@ public class ClientService {
     /**
      * Obtiene los platos que un cliente ha consumido de un chef específico.
      */
+    @Transactional(readOnly = true)
     public List<DishResponse> obtenerPlatosDeClientePorChef(UUID clientId, UUID chefId) {
         // 1. Validar que el cliente exista antes de buscar sus consumos
         buscarPorIdOGenerarExcepcion(clientId);

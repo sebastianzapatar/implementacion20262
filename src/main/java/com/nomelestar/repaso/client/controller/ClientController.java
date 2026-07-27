@@ -4,8 +4,10 @@ import com.nomelestar.repaso.chef.dto.ChefResponse;
 import com.nomelestar.repaso.client.dto.ClientRequest;
 import com.nomelestar.repaso.client.dto.ClientResponse;
 import com.nomelestar.repaso.client.service.ClientService;
+import com.nomelestar.repaso.dish.dto.DishPopularityResponse;
 import com.nomelestar.repaso.dish.dto.DishResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import jakarta.validation.Valid;
@@ -85,5 +89,18 @@ public class ClientController {
     public ResponseEntity<List<DishResponse>> platosDeClientePorChef(
             @PathVariable UUID clientId, @PathVariable UUID chefId) {
         return ResponseEntity.ok(clientService.obtenerPlatosDeClientePorChef(clientId, chefId));
+    }
+
+    @Operation(summary = "Ranking de platos más consumidos (consulta compleja con @Query)",
+            description = "Consulta JPQL con doble JOIN sobre la relación ManyToMany (dish_clients) "
+                    + "y sobre chef, más GROUP BY, HAVING, COUNT(DISTINCT) y SUM. "
+                    + "Devuelve una proyección DTO, no entidades.")
+    @GetMapping("/stats/ranking-platos")
+    public ResponseEntity<List<DishPopularityResponse>> rankingPlatos(
+            @Parameter(description = "Precio mínimo del plato a considerar")
+            @RequestParam(defaultValue = "0") BigDecimal precioMinimo,
+            @Parameter(description = "Cantidad mínima de clientes distintos que deben haberlo consumido")
+            @RequestParam(defaultValue = "1") long minimoClientes) {
+        return ResponseEntity.ok(clientService.obtenerRankingPlatos(precioMinimo, minimoClientes));
     }
 }

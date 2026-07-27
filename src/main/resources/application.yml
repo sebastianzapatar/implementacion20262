@@ -1,24 +1,50 @@
+# =============================================================================
+# application.yml  ->  CONFIGURACIÓN COMÚN A TODOS LOS PERFILES
+# =============================================================================
+# Este archivo SIEMPRE se carga, sin importar el perfil activo.
+# Lo específico de cada ambiente vive en application-{perfil}.yml y se aplica
+# ENCIMA de este (lo que está allá pisa lo que está acá).
+#
+# Regla de nombres (es literal, Spring la busca así):
+#     application-<nombre-del-perfil>.yml
+#              ^ guion, no guion bajo ni punto
+#
+#   perfil "dev"    -> application-dev.yml
+#   perfil "prod"   -> application-prod.yml
+#   perfil "docker" -> application-docker.yml
+#   perfil "test"   -> application-test.yml   (en src/test/resources)
+#
+# El nombre distingue mayúsculas: el perfil "Dev" NO carga application-dev.yml.
+# =============================================================================
 
 spring:
   application:
     name: repaso
-  datasource:
-    url: jdbc:postgresql://localhost:5432/chefs_db
-    username: postgresql
-    password: postgresql
-    driver-class-name: org.postgresql.Driver
+
+  profiles:
+    # Perfil por defecto si nadie dice lo contrario.
+    # Se puede sobreescribir con la variable de entorno SPRING_PROFILES_ACTIVE
+    # o con --spring.profiles.active=... al ejecutar.
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
   jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    # Open Session In View: por defecto Spring lo deja en true y mantiene la
+    # sesión de Hibernate abierta durante TODO el request. Eso "tapa" los errores
+    # de carga LAZY, pero esconde el problema N+1 y mantiene la conexión a la BD
+    # ocupada de más. Lo apagamos y resolvemos las relaciones donde corresponde:
+    # en el repositorio (JOIN FETCH / @EntityGraph) y con @Transactional en el
+    # servicio. Al apagarlo también desaparece el warning del arranque.
+    open-in-view: false
+
     defer-datasource-initialization: true
+
     properties:
       hibernate:
         format_sql: true
-server:
-  port: 8080
+        # Falla el arranque si una consulta con paginación necesita traer toda
+        # la colección a memoria, en vez de hacerlo en silencio.
+        query:
+          fail_on_pagination_over_collection_fetch: true
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
+server:
+  port: ${SERVER_PORT:8080}

@@ -59,4 +59,32 @@ public class DishController {
         dishService.eliminarPlato(id);
         return ResponseEntity.noContent().build();
     }
+
+    // -------------------------------------------------------------------------
+    // Endpoints que demuestran JOINs @ManyToMany SIN @Query
+    // -------------------------------------------------------------------------
+
+    @Operation(summary = "Platos consumidos por un cliente (JOIN sin @Query)",
+            description = "Usa el método derivado findByClientes_Id: Spring Data arma solo el JOIN "
+                    + "con la tabla intermedia dish_clients, sin escribir JPQL.")
+    @GetMapping("/by-client/{clientId}")
+    public ResponseEntity<List<DishResponse>> platosPorCliente(@PathVariable UUID clientId) {
+        return ResponseEntity.ok(dishService.obtenerPlatosConsumidosPorCliente(clientId));
+    }
+
+    @Operation(summary = "Platos de un cliente filtrados por chef (doble JOIN sin @Query)",
+            description = "Usa findByClientes_IdAndChef_IdOrderByPrecioDesc. Devuelve lo mismo que "
+                    + "GET /api/clients/{clientId}/chefs/{chefId}/platos, que lo resuelve con @Query.")
+    @GetMapping("/by-client/{clientId}/chef/{chefId}")
+    public ResponseEntity<List<DishResponse>> platosPorClienteYChef(
+            @PathVariable UUID clientId, @PathVariable UUID chefId) {
+        return ResponseEntity.ok(dishService.obtenerPlatosDeClientePorChefSinQuery(clientId, chefId));
+    }
+
+    @Operation(summary = "Cantidad de platos consumidos por un cliente (COUNT con JOIN sin @Query)",
+            description = "Usa countByClientes_Id: hace un SELECT COUNT en la BD sin traer las filas.")
+    @GetMapping("/by-client/{clientId}/count")
+    public ResponseEntity<Long> contarPlatosPorCliente(@PathVariable UUID clientId) {
+        return ResponseEntity.ok(dishService.contarPlatosConsumidosPorCliente(clientId));
+    }
 }

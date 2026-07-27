@@ -3,6 +3,7 @@ package com.nomelestar.repaso.client.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 
 /**
  * DTO para crear o actualizar un Cliente.
@@ -14,6 +15,8 @@ public record ClientRequest(
 
         @NotBlank(message = "El email no puede estar vacío")
         @Email(message = "El email debe ser válido")
-        String email
+        String email,
+
+        List<java.util.UUID> dishIds
 ) {
 }

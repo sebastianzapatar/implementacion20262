@@ -27,8 +27,13 @@ compose.yml
 .DS_Store
 Thumbs.db
 
+# Variables de entorno (los secretos los inyecta compose, no la imagen)
+.env
+.env.*
+
 # Logs
 *.log
+app_logs.txt
 
 # Archivos temporales
 *.tmp

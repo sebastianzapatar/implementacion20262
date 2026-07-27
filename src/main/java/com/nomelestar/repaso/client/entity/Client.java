@@ -60,4 +60,20 @@ public class Client {
     @Builder.Default
     private List<Dish> platosConsumidos = new ArrayList<>();
 
+    /**
+     * equals/hashCode por id. Ver la explicación detallada en {@code Dish}.
+     * Sin esto, {@code lista.contains(cliente)} / {@code remove(cliente)}
+     * comparan por referencia de memoria y fallan entre transacciones distintas.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client other)) return false;
+        return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Client.class.hashCode();
+    }
 }

@@ -29,10 +29,23 @@ public class ChefMapper {
             return null;
         }
 
-        // Usamos el Builder generado por Lombok
-        return Chef.builder()
-                .nombre(request.nombre()) // En los records, el getter es el nombre de la variable con ()
+        Chef chef = Chef.builder()
+                .nombre(request.nombre())
                 .build();
+
+        if (request.platos() != null) {
+            for (var platoReq : request.platos()) {
+                Dish dish = Dish.builder()
+                        .nombre(platoReq.nombre())
+                        .descripcion(platoReq.descripcion())
+                        .precio(platoReq.precio())
+                        .chef(chef)
+                        .build();
+                chef.getPlatos().add(dish);
+            }
+        }
+
+        return chef;
     }
 
     /**

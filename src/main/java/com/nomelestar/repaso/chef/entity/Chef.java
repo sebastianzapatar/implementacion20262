@@ -51,8 +51,22 @@ public class Chef {
      * Relación Uno a Muchos (Un Chef -> Muchos Platos).
      * cascade = ALL indica que si se borra un chef, se borran sus platos.
      */
-    @OneToMany(mappedBy = "chef", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "chef", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Dish> platos = new ArrayList<>();
 
+    /**
+     * equals/hashCode por id. Ver la explicación detallada en {@code Dish}.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Chef other)) return false;
+        return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Chef.class.hashCode();
+    }
 }

@@ -1,0 +1,36 @@
+# =============================================================================
+# PERFIL "docker"  ->  se activa con: spring.profiles.active=docker
+# =============================================================================
+# Lo usa el contenedor levantado por compose.yml.
+# La diferencia con "dev" es el host de la base: acá NO es localhost sino "db",
+# que es el nombre del servicio de Postgres dentro de la red de Docker.
+#
+# Las credenciales llegan como variables de entorno que compose arma desde
+# el .env. Acá no hay ningún valor por defecto a propósito: si falta una
+# variable conviene que la app falle al arrancar y no que se conecte a
+# cualquier lado con una contraseña adivinada.
+#
+# ¡OJO CON EL NOMBRE DE LAS VARIABLES!
+# Acá se usa ${DB_URL} y NO ${SPRING_DATASOURCE_URL}. Motivo: Spring normaliza
+# SPRING_DATASOURCE_URL a la propiedad spring.datasource.url, que es justo la
+# que estamos definiendo. Queda una autorreferencia, el placeholder no se
+# resuelve y le llega al driver el texto literal "${SPRING_DATASOURCE_URL}",
+# con un error confuso ("Driver claims to not accept jdbcUrl").
+# Usando un nombre propio (DB_URL) no hay colisión.
+# =============================================================================
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug

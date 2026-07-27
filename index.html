@@ -604,6 +604,33 @@ void calculaDescuentoParaClientePremium() {
         </div>
       </section>
 
+      <section>
+        <div class="kicker">Ejemplo Práctico</div>
+        <h2>Inserción Compleja (Postman)</h2>
+        <p>Creación de un Chef junto con sus Platos en una sola petición.</p>
+        
+        <div class="code" style="margin-top: 20px;">
+POST /api/chefs
+Content-Type: application/json
+
+{
+  "nombre": "Gordon Ramsay",
+  "platos": [
+    {
+      "nombre": "Beef Wellington",
+      "descripcion": "Clásico británico",
+      "precio": 50.0
+    },
+    {
+      "nombre": "Risotto de Hongos",
+      "descripcion": "Cremoso y delicioso",
+      "precio": 35.0
+    }
+  ]
+}
+        </div>
+      </section>
+
     </div>
   </div>
 

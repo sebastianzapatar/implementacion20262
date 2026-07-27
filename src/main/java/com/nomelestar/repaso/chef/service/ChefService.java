@@ -5,10 +5,13 @@ import com.nomelestar.repaso.chef.dto.ChefResponse;
 import com.nomelestar.repaso.chef.entity.Chef;
 import com.nomelestar.repaso.chef.mapper.ChefMapper;
 import com.nomelestar.repaso.chef.repository.ChefRepository;
+import com.nomelestar.repaso.client.entity.Client;
 import com.nomelestar.repaso.common.exception.BadRequestException;
 import com.nomelestar.repaso.common.exception.ResourceNotFoundException;
+import com.nomelestar.repaso.dish.entity.Dish;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +34,7 @@ public class ChefService {
      * @param request Datos del Chef a crear.
      * @return ChefResponse con los datos del Chef creado.
      */
+    @Transactional
     public ChefResponse crearChef(ChefRequest request) {
         // 1. Validamos que el nombre no venga nulo ni vacío
         validarRequest(request);
@@ -48,9 +52,12 @@ public class ChefService {
     /**
      * Obtiene todos los Chefs registrados.
      */
+    @Transactional(readOnly = true)
     public List<ChefResponse> obtenerTodos() {
-        // Buscamos todos, mapeamos cada Entidad a DTO y retornamos la lista
-        return chefRepository.findAll().stream()
+        // findAllBy() usa @EntityGraph: trae los chefs CON sus platos en una
+        // sola consulta. Con findAll() se lanzaba una consulta extra por chef
+        // al leer getPlatos() en el mapper (problema N+1).
+        return chefRepository.findAllBy().stream()
                 .map(ChefMapper::toResponse)
                 .collect(Collectors.toList());
     }
@@ -58,15 +65,18 @@ public class ChefService {
     /**
      * Obtiene un Chef por su ID.
      */
+    @Transactional(readOnly = true)
     public ChefResponse obtenerPorId(UUID id) {
-        // Reutilizamos el método privado para buscar o lanzar excepción 404
-        Chef chef = buscarPorIdOGenerarExcepcion(id);
+        // Versión con @EntityGraph para traer también los platos que el mapper necesita
+        Chef chef = chefRepository.findWithPlatosById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró ningún chef con el ID: " + id));
         return ChefMapper.toResponse(chef);
     }
 
     /**
      * Actualiza los datos de un Chef existente.
      */
+    @Transactional
     public ChefResponse actualizarChef(UUID id, ChefRequest request) {
         // 1. Validamos los datos entrantes
         validarRequest(request);
@@ -83,12 +93,40 @@ public class ChefService {
     }
 
     /**
-     * Elimina un Chef.
+     * Elimina un Chef y, por CascadeType.ALL, todos sus platos.
+     *
+     * <p>ANTES fallaba: al borrar los platos, las filas de la tabla intermedia
+     * {@code dish_clients} seguían apuntando a esos platos y Postgres rechazaba
+     * el DELETE con un error de llave foránea (que salía como HTTP 500).
+     *
+     * <p>La cascada de JPA solo viaja por la relación Chef -> Dish; no sabe nada
+     * de la Muchos-a-Muchos Dish <-> Client. Como el dueño de esa relación es
+     * Client (ahí está el @JoinTable), hay que sacar el plato de la lista de
+     * cada cliente ANTES de borrar. Eso genera los DELETE en dish_clients.
      */
+    @Transactional
     public void eliminarChef(UUID id) {
-        // Si no existe, lanzará 404. Si existe, lo elimina de la BD.
-        Chef chef = buscarPorIdOGenerarExcepcion(id);
+        // Traemos el chef junto con sus platos para poder recorrerlos
+        Chef chef = chefRepository.findWithPlatosById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró ningún chef con el ID: " + id));
+
+        for (Dish plato : chef.getPlatos()) {
+            desvincularPlatoDeSusClientes(plato);
+        }
+
         chefRepository.delete(chef);
+    }
+
+    /**
+     * Rompe la relación Muchos-a-Muchos de un plato con todos sus clientes.
+     * Hay que tocar el lado DUEÑO (Client.platosConsumidos) para que Hibernate
+     * genere realmente los DELETE sobre la tabla intermedia.
+     */
+    private void desvincularPlatoDeSusClientes(Dish plato) {
+        for (Client cliente : plato.getClientes()) {
+            cliente.getPlatosConsumidos().remove(plato);
+        }
+        plato.getClientes().clear();
     }
 
     /**

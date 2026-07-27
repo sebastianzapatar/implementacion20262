@@ -1,56 +1,47 @@
-# ============================================================
-# Dockerfile Multi-Stage Build
-# ============================================================
-# Este Dockerfile utiliza una estrategia de construcción en múltiples
-# etapas (multi-stage build) para generar una imagen final lo más
-# liviana y segura posible.
+# ============================ ETAPA 1: BUILD ============================
 #
-# Etapa 1 ("build"): Compila el proyecto con Gradle y JDK 25.
-# Etapa 2 ("runtime"): Copia solo el .jar final a una imagen JRE mínima.
-# ============================================================
-
-# -------------------------------------------------------
-# ETAPA 1: BUILD — Compilación del proyecto
-# -------------------------------------------------------
-# Usamos una imagen con JDK 25 completo (debe coincidir con
-# la versión definida en build.gradle -> languageVersion).
-FROM eclipse-temurin:25-jdk AS build
+# La imagen base DEBE traer el mismo Java que pide el toolchain de build.gradle
+# (languageVersion = 25). Antes acá había un JDK 21 confiando en que Gradle se
+# bajaría solo el JDK 25; eso NO funciona: la descarga automática de toolchains
+# necesita el plugin "foojay-resolver-convention" declarado en settings.gradle,
+# que este proyecto no tiene. Sin él Gradle falla con:
+#   "No matching toolchains found for requested specification: {languageVersion=25}"
+#
+# Arrancar directamente desde un JDK 25 es además más rápido y reproducible,
+# porque no descarga un JDK entero en cada build.
+FROM eclipse-temurin:25-jdk AS builder
 
 WORKDIR /app
 
-# Copiamos primero los archivos de configuración de Gradle
-# para aprovechar la caché de capas de Docker (si no cambian,
-# Docker no vuelve a descargar las dependencias).
-COPY gradle/ gradle/
-COPY gradlew build.gradle settings.gradle ./
-
-# Damos permisos de ejecución al wrapper de Gradle
+# 1) Primero SOLO los archivos de build: Docker cachea esta capa y no la vuelve
+#    a ejecutar mientras no toques build.gradle.
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle settings.gradle ./
 RUN chmod +x gradlew
 
-# Descargamos las dependencias SIN compilar el código fuente.
-# Esto permite que Docker cachee esta capa pesada.
-RUN ./gradlew dependencies --no-daemon
+# 2) Después el código fuente, para que al cambiar una clase no se invaliden
+#    las capas anteriores.
+COPY src src
 
-# Ahora sí copiamos todo el código fuente del proyecto
-COPY src/ src/
+# --mount=type=cache guarda el caché de Gradle (~/.gradle) entre builds, así no
+# se vuelven a descargar todas las dependencias cada vez.
+# -x test omite los tests en la imagen (se corren aparte con ./gradlew test).
+RUN --mount=type=cache,target=/root/.gradle ./gradlew --no-daemon build -x test
 
-# Compilamos el proyecto y generamos el .jar (sin ejecutar tests)
-RUN ./gradlew bootJar --no-daemon -x test
-
-# -------------------------------------------------------
-# ETAPA 2: RUNTIME — Imagen final liviana
-# -------------------------------------------------------
-# Usamos una imagen solo con JRE (sin herramientas de compilación)
-# para reducir drásticamente el tamaño de la imagen final.
-FROM eclipse-temurin:25-jre AS runtime
+# =========================== ETAPA 2: RUNTIME ===========================
+# Imagen de Java 25 de Oracle. Solo lleva el .jar, no el código ni Gradle,
+# por eso la imagen final es mucho más liviana que la de build.
+FROM container-registry.oracle.com/java/openjdk:25-oraclelinux9
 
 WORKDIR /app
 
-# Copiamos ÚNICAMENTE el .jar generado en la etapa anterior
-COPY --from=build /app/build/libs/*.jar app.jar
+# No correr como root: si alguien logra ejecutar código dentro del contenedor,
+# queda limitado a un usuario sin privilegios.
+RUN useradd --system --create-home --shell /sbin/nologin spring
+USER spring
 
-# Puerto que expone la aplicación Spring Boot
+COPY --from=builder --chown=spring:spring /app/build/libs/*.jar app.jar
 EXPOSE 8080
 
-# Comando que se ejecuta al iniciar el contenedor
 ENTRYPOINT ["java", "-jar", "app.jar"]

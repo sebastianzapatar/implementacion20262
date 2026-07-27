@@ -279,6 +279,59 @@ podman compose up db -d
 
 La aplicación estará disponible en `http://localhost:8080`
 
+### Perfiles de configuración
+
+La configuración está separada por ambiente. **El nombre del archivo es literal** —
+Spring lo busca exactamente así:
+
+```
+application-<nombre-del-perfil>.yml
+            ↑ guion, NO guion bajo ni punto. Distingue mayúsculas.
+```
+
+| Archivo | Perfil | Para qué sirve |
+|---|---|---|
+| `application.yml` | *(siempre)* | Lo común a todos: nombre de la app, `open-in-view`, puerto |
+| `application-dev.yml` | `dev` | PostgreSQL en localhost, logs SQL, `ddl-auto: update` |
+| `application-docker.yml` | `docker` | Host `db` en la red de Docker, credenciales por variables |
+| `application-prod.yml` | `prod` | `ddl-auto: validate`, sin log de SQL, logs en `info` |
+| `application-test.yml` | `test` | H2 en memoria (está en `src/test/resources`) |
+
+`application.yml` **siempre** se carga; el archivo del perfil se aplica encima y
+pisa lo que repita. Si el nombre no coincide, Spring **no avisa**: ignora el
+archivo y arranca con la configuración base.
+
+**Cómo activar un perfil** (de menor a mayor prioridad):
+
+```bash
+# 1. Por defecto, declarado en application.yml -> dev
+./gradlew bootRun
+
+# 2. Variable de entorno (es lo que usa compose.yml)
+SPRING_PROFILES_ACTIVE=prod java -jar app.jar
+
+# 3. Argumento del programa
+java -jar app.jar --spring.profiles.active=prod
+
+# 4. Propiedad de la JVM
+java -Dspring.profiles.active=prod -jar app.jar
+```
+
+En los tests se activa con la anotación:
+
+```java
+@SpringBootTest
+@ActiveProfiles("test")
+class MiTest { … }
+```
+
+> ⚠️ **Cuidado con el nombre de las variables de entorno.** En los perfiles se usa
+> `${DB_URL}` y no `${SPRING_DATASOURCE_URL}`. Spring normaliza este último a la
+> propiedad `spring.datasource.url`, que es justo la que se está definiendo: queda
+> una autorreferencia, el placeholder no se resuelve y al driver le llega el texto
+> literal `${SPRING_DATASOURCE_URL}` con un error confuso
+> (*"Driver claims to not accept jdbcUrl"*).
+
 ### Opción 2: Todo con Docker / Podman (producción)
 
 Construir y levantar todos los servicios (base de datos + aplicación):
@@ -410,8 +463,75 @@ El `ChefRepository` muestra tres formas de hacer consultas:
 - **JPQL**: Consulta orientada a objetos usando los nombres de las clases Java.
 - **SQL Nativo**: Consulta SQL tradicional usando los nombres reales de las tablas.
 
+### 3.1 Consultas sobre la relación ManyToMany: los dos enfoques
+
+La relación `Client <-> Dish` (tabla intermedia `dish_clients`) sirve para comparar
+las dos maneras de resolver un JOIN. Ambas están probadas en
+`src/test/java/com/nomelestar/repaso/query/ManyToManyQueryTest.java`.
+
+**a) CON `@Query` — consulta compleja** (`ClientRepository.rankingPlatosMasConsumidos`)
+
+Ranking de platos más consumidos. Combina doble JOIN (por la ManyToMany y por el chef),
+`WHERE`, `GROUP BY`, `HAVING`, `COUNT(DISTINCT)`, `SUM` y una proyección a DTO:
+
+```java
+@Query("""
+        SELECT new com.nomelestar.repaso.dish.dto.DishPopularityResponse(
+                   d.id, d.nombre, ch.nombre, d.precio,
+                   COUNT(DISTINCT cl.id), SUM(d.precio))
+        FROM Dish d
+             JOIN d.clientes cl
+             JOIN d.chef ch
+        WHERE d.precio >= :precioMinimo
+        GROUP BY d.id, d.nombre, ch.nombre, d.precio
+        HAVING COUNT(DISTINCT cl.id) >= :minimoClientes
+        ORDER BY COUNT(DISTINCT cl.id) DESC, d.precio DESC
+        """)
+List<DishPopularityResponse> rankingPlatosMasConsumidos(...);
+```
+
+`GET /api/clients/stats/ranking-platos?precioMinimo=0&minimoClientes=1`
+
+**b) SIN `@Query` — métodos derivados** (`DishRepository`)
+
+Spring Data arma el JOIN con la tabla intermedia leyendo el nombre del método.
+El guion bajo `_` marca dónde termina una propiedad y empieza la siguiente:
+
+```java
+List<Dish> findByClientes_Id(UUID clientId);
+List<Dish> findByClientes_IdAndChef_IdOrderByPrecioDesc(UUID clientId, UUID chefId);
+List<Dish> findByClientes_EmailIgnoreCaseAndPrecioGreaterThanEqual(String email, BigDecimal precioMinimo);
+long       countByClientes_Id(UUID clientId);
+boolean    existsByIdAndClientes_Id(UUID dishId, UUID clientId);
+
+@EntityGraph(attributePaths = {"chef"})   // JOIN FETCH sin escribir @Query
+List<Dish> findByClientes_Nombre(String nombreCliente);
+```
+
+`GET /api/dishes/by-client/{clientId}`
+`GET /api/dishes/by-client/{clientId}/chef/{chefId}`
+`GET /api/dishes/by-client/{clientId}/count`
+
+> `findByClientes_IdAndChef_IdOrderByPrecioDesc` devuelve exactamente lo mismo que
+> `ClientRepository.findPlatosDeClientePorChef`, que usa `@Query`. Sirven para
+> comparar los dos estilos lado a lado.
+
+**¿Cuál usar?** El método derivado gana cuando el filtro es simple: no hay JPQL que
+mantener y el compilador valida el nombre al arrancar. El `@Query` gana cuando hay
+agregados (`GROUP BY`, `HAVING`), proyecciones a DTO o el nombre del método derivado
+quedaría impronunciable.
+
 ### 4. Manejo Global de Excepciones
-Se utiliza `@ControllerAdvice` para capturar excepciones en un solo lugar y devolver respuestas JSON estructuradas al cliente.
+Se utiliza `@RestControllerAdvice` para capturar excepciones en un solo lugar y devolver
+respuestas JSON estructuradas al cliente:
+
+| Situación | Código |
+|---|---|
+| Recurso inexistente (`ResourceNotFoundException`) | 404 |
+| Falla de validación `@Valid` (incluye mapa campo → error) | 400 |
+| UUID mal formado en la URL / JSON inválido | 400 |
+| Email duplicado u otra violación de constraint | 409 |
+| Error inesperado | 500 (mensaje genérico; el detalle va al log) |
 
 ### 5. Relaciones JPA
 - `@OneToMany` en Chef → Lista de platos
